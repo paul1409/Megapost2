@@ -25,7 +25,7 @@ namespace Megapost2 {
             if (msg == null) return;
             var e = new SocketCommandContext(client, msg);
             int argPos = 0;
-            if (msg.HasCharPrefix('`',ref argPos)) {
+            if (msg.HasCharPrefix('`', ref argPos)) {
                 var result = await service.ExecuteAsync(e, argPos);
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand) await e.Channel.SendMessageAsync(result.ErrorReason);
             }
