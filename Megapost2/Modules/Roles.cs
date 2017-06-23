@@ -10,10 +10,10 @@ using System.Globalization;
 namespace Megapost2.Modules {
 
     [Group("role")]
+    [RequireUserPermission(GuildPermission.ManageRoles)]
     public class Roles : ModuleBase {
 
         [Command("add")]
-        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task add(string s, IGuildUser[] u) {
             var roles = Context.Guild.Roles;
             IRole role;
@@ -25,7 +25,6 @@ namespace Megapost2.Modules {
         }
 
         [Command("take")]
-        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task take(string s, IGuildUser[] u) {
             var roles = Context.Guild.Roles;
             IRole role;
@@ -37,7 +36,6 @@ namespace Megapost2.Modules {
         }
 
         [Command("create")]
-        [RequireUserPermission(GuildPermission.ManageRoles)]
         public async Task create(string s) {
            await Context.Guild.CreateRoleAsync(s);
         }
