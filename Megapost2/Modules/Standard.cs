@@ -54,6 +54,27 @@ namespace Megapost2.Modules {
             );
         }
 
+        [Command("serverinfo")]
+        [RequireContext(ContextType.Guild)]
+        [Remarks("Gets general information about the current server")]
+        public async Task ServerInfo() {
+            var builder = new StringBuilder();
+            var server = Context.Guild;
+            var owner = server.Owner;
+            var textChannels = server.Channels.OfType<ITextChannel>();
+            var voiceChannels = server.Channels.OfType<IVoiceChannel>();
+            var roles = server.Roles.Where(r => r.Id != server.EveryoneRole.Id);
+            builder.AppendLine($"Name: {server.Name.ToString()}")
+              .AppendLine($"ID: {server.Id.ToString().ToString()}")
+              .AppendLine($"Owner: {owner.Username.ToString()}")
+              .AppendLine($"Region: {server.VoiceRegionId.ToString()}")
+              .AppendLine($"Created: {String.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
+              .AppendLine($"User Count: {server.MemberCount.ToString()}");
+            if (!string.IsNullOrEmpty(server.IconUrl))
+                builder.AppendLine(server.IconUrl);
+            await Context.Channel.SendMessageAsync(builder.ToString());
+        }
+
         private static string GetUptime()
             => (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString(@"dd\.hh\:mm\:ss");
         private static string GetHeapSize() => Math.Round(GC.GetTotalMemory(true) / (1024.0 * 1024.0), 2).ToString();
