@@ -18,6 +18,7 @@ namespace Megapost2 {
             service = new CommandService();
             service.AddModulesAsync(Assembly.GetEntryAssembly());
             client.MessageReceived += HandleCommandAsync;
+            client.UserJoined += Join;
         }
 
         private async Task HandleCommandAsync(SocketMessage s) {
@@ -29,6 +30,12 @@ namespace Megapost2 {
                 var result = await service.ExecuteAsync(e, argPos);
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand) await e.Channel.SendMessageAsync(result.ErrorReason);
             }
+        }
+
+        private async Task Join(SocketGuildUser u) {
+            var channel = client.GetChannel(u.Guild.DefaultChannel.Id) as SocketTextChannel;
+            await channel.SendMessageAsync(u.Mention + " has joined the server");
+            
         }
     }
 }

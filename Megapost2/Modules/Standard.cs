@@ -10,14 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Megapost2.Modules {
-    public class Standard : ModuleBase {
+    public class Standard : ModuleBase<SocketCommandContext> {
         [Command("invite")]
         [Summary("Returns the OAuth2 Invite URL of the bot")]
         public async Task Invite() {
             var application = await Context.Client.GetApplicationInfoAsync();
             await ReplyAsync(
                 $"A user with `MANAGE_SERVER` can invite me to your server here: <http://nazr.in/ZzS>");
-
             //backup https://discordapp.com/oauth2/authorize?&client_id=269304726892314624&scope=bot&permissions=0xFFFFFFFFFFFF
         }
 
