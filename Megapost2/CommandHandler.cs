@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord.Commands;
 using System.IO;
+using Discord;
 
 namespace Megapost2 {
     public class CommandHandler {
         
-        
         private DiscordSocketClient client;
         private CommandService service;
 
-        public CommandHandler(DiscordSocketClient client) {
+        public async Task Initialize(DiscordSocketClient client) {
             this.client = client;
             service = new CommandService();
-            service.AddModulesAsync(Assembly.GetEntryAssembly());
+            await service.AddModulesAsync(Assembly.GetEntryAssembly());
             client.MessageReceived += HandleCommandAsync;
             client.UserJoined += Join;
             client.UserLeft += Leave;
@@ -47,7 +47,6 @@ namespace Megapost2 {
             var leave = (Path.Combine(Directory.GetCurrentDirectory(), "Messages\\leave.txt"));
             var channel = client.GetChannel(u.Guild.DefaultChannel.Id) as SocketTextChannel;
             await channel.SendMessageAsync(string.Format(usrmsg(leave), u.ToString()));
-
         }
 
         private string usrmsg(string s) {

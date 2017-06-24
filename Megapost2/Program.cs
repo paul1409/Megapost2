@@ -16,9 +16,11 @@ namespace Megapost2 {
 
         public async Task StartAsync() {
             client = new DiscordSocketClient();
-            handler = new CommandHandler(client);
+            new CommandHandler();
             await client.LoginAsync(TokenType.Bot, "MzA2OTU4OTg1MTc1NjI5ODI0.DC2bHQ.X7UX6haHvjrM7kXqhbsSvBHYDZU");
             await client.StartAsync();
+            handler = new CommandHandler();
+            await handler.Initialize(client);
             await Task.Delay(-1);
         }
     }

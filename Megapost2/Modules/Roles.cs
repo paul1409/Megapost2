@@ -14,30 +14,29 @@ namespace Megapost2.Modules {
     public class Roles : ModuleBase {
 
         [Command("add")]
-        public async Task add(string s, IGuildUser[] u) {
+        public async Task add(IGuildUser u, [Remainder] string s) {
             var roles = Context.Guild.Roles;
-            IRole role;
             foreach (var v in roles)
-                if (v.ToString() == s) {
-                    role = v;
-                    foreach (IGuildUser usr in u) await usr.AddRoleAsync(role);
-                } else await ReplyAsync("Role not found");
+                if (v.Name == s) {
+                    await u.AddRoleAsync(v);
+                    await Context.Channel.SendMessageAsync("Role `" + s + "` has been added to " + u.Mention);
+                }
         }
 
         [Command("take")]
-        public async Task take(string s, IGuildUser[] u) {
+        public async Task take(IGuildUser u, [Remainder] string s) {
             var roles = Context.Guild.Roles;
-            IRole role;
             foreach (var v in roles)
-                if (v.ToString() == s) {
-                    role = v;
-                    foreach (IGuildUser usr in u) await usr.RemoveRoleAsync(role);
-                } else await ReplyAsync("Role not found");
+                if (v.Name == s) {
+                    await u.RemoveRoleAsync(v);
+                    await Context.Channel.SendMessageAsync("Role `" + s + "` has been taken from "+ u.Mention);
+                }
         }
 
         [Command("create")]
-        public async Task create(string s) {
-           await Context.Guild.CreateRoleAsync(s);
+        public async Task create([Remainder] string s) {
+            await Context.Guild.CreateRoleAsync(s);
+            await Context.Channel.SendMessageAsync("Role `" + s + "` has been created");
         }
 
     }

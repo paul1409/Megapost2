@@ -13,15 +13,22 @@ namespace Megapost2.Modules {
         [Command("kick")]
         [RequireUserPermission(GuildPermission.KickMembers)]
         [Remarks("Kicks all mentioned users")]
-        public async Task Kick(IGuildUser[] users) {
-            foreach (var u in users) await u.KickAsync();
+        public async Task Kick(IGuildUser u) {
+            await u.KickAsync();
         }
 
         [Command("ban")]
         [RequireUserPermission(GuildPermission.BanMembers)]
         [Remarks("Bans the mentioned users")]
-        public async Task Ban(IGuildUser[] users) {
-            foreach (var u in users) await Context.Guild.AddBanAsync(u);
+        public async Task Ban(IGuildUser u) {
+            await Context.Guild.AddBanAsync(u);
+        }
+
+        [Command("purge")]
+        [RequireUserPermission(GuildPermission.KickMembers)]
+        [Remarks("Purges users who haven't been online in specified number of days")]
+        public async Task Purge(int i) {
+            await Context.Guild.PruneUsersAsync(i);
         }
     }
 }
