@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace Megapost2.Modules {
     public class Standard : ModuleBase<SocketCommandContext> {
+
+        static cmdlist commands = new cmdlist();
+        List<Commands> cmds = commands.reader();
+
         [Command("invite")]
         [Summary("Returns the OAuth2 Invite URL of the bot")]
         public async Task Invite() {
@@ -52,6 +56,16 @@ namespace Megapost2.Modules {
                 $"- Channels: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Channels.Count)}" +
                 $"- Users: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Users.Count)}"
             );
+        }
+
+        [Command("help")]
+        [Remarks("Gets the meme list")]
+        public async Task memelist() {
+            string memes = "**MEMES**: ";
+            foreach (Commands c in cmds) memes += "`" + c.name + "` ";
+            memes += "\n***SPECIAL MEMES***: ";
+            foreach (string s in commands.randlist()) memes += "`" + s + "` ";
+            await Context.Channel.SendMessageAsync(memes);
         }
 
         [Command("serverinfo")]

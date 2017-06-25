@@ -206,8 +206,11 @@
   <ItemGroup>
     <Compile Include="CommandHandler.cs" />
     <Compile Include="Modules\Admin.cs" />
+    <Compile Include="Modules\cmdlist.cs" />
+    <Compile Include="Modules\Commands.cs" />
     <Compile Include="Modules\Fun.cs" />
     <Compile Include="Modules\Memes.cs" />
+    <Compile Include="Modules\Multi.cs" />
     <Compile Include="Modules\Prune.cs" />
     <Compile Include="Modules\Roles.cs" />
     <Compile Include="Modules\Standard.cs" />

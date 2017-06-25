@@ -10,7 +10,7 @@ namespace Megapost2.Modules {
 
     [Group("prune")]
     [RequireUserPermission(GuildPermission.ManageMessages)]
-    public class Prune : ModuleBase {
+    public class Prune : ModuleBase<SocketCommandContext> {
 
         [Command]
         public async Task prune(int i) {

@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord;
+using System.IO;
 
 namespace Megapost2 {
     public class Program {
 
+        StreamReader token = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "token.txt"));
         static void Main(string[] args) => new Program().StartAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient client;
@@ -17,7 +19,11 @@ namespace Megapost2 {
         public async Task StartAsync() {
             client = new DiscordSocketClient();
             new CommandHandler();
-            await client.LoginAsync(TokenType.Bot, "MzA2OTU4OTg1MTc1NjI5ODI0.DC2bHQ.X7UX6haHvjrM7kXqhbsSvBHYDZU");
+            try {
+                await client.LoginAsync(TokenType.Bot, token.ReadLine());
+            }
+            catch (Exception e) { Console.WriteLine("Token missing"); }
+            await client.SetGameAsync("DECEPTIONS ATTACK!");
             await client.StartAsync();
             handler = new CommandHandler();
             await handler.Initialize(client);
