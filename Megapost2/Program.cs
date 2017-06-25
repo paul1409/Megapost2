@@ -23,7 +23,6 @@ namespace Megapost2 {
                 await client.LoginAsync(TokenType.Bot, token.ReadLine());
             }
             catch (Exception e) { Console.WriteLine("Token missing"); }
-            await client.SetGameAsync("DECEPTIONS ATTACK!");
             await client.StartAsync();
             handler = new CommandHandler();
             await handler.Initialize(client);
