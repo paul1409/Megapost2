@@ -37,6 +37,8 @@ namespace Megapost2.Modules {
         [Alias("echo")]
         [Summary("Echos the provided input")]
         public async Task Say([Remainder] string input) {
+            var m = await Context.Channel.GetMessagesAsync(1).Flatten();
+            await Context.Channel.DeleteMessagesAsync(m);
             await ReplyAsync(input);
         }
 
@@ -65,6 +67,7 @@ namespace Megapost2.Modules {
             foreach (Commands c in cmds) memes += "`" + c.name + "` ";
             memes += "\n***SPECIAL MEMES***: ";
             foreach (string s in commands.randlist()) memes += "`" + s + "` ";
+            await Context.Channel.SendMessageAsync("**`meme** must be typed out before each meme");
             await Context.Channel.SendMessageAsync(memes);
         }
 
