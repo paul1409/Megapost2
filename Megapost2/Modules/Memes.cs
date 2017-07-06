@@ -25,7 +25,7 @@ namespace Megapost2.Modules {
 
         [Command]
         [Remarks("Attempts to get command")]
-        public async Task meme(string s) {
+        public async Task meme([Remainder] string s) {
             if (clist.exists(s))
                 foreach (Commands c in cmds) {
                     if (c.name == s) {
@@ -33,7 +33,17 @@ namespace Megapost2.Modules {
                         return;
                     }
                 }
-            if (clist.multiExists(s)) await Context.Channel.SendMessageAsync(clist.contained(s));
+            else if (clist.multiExists(s)) await Context.Channel.SendMessageAsync(clist.contained(s));
+            else {
+                string[] str = s.Split(null);
+                    foreach (Commands c in cmds) {
+                        if (c.name == str[0]) {
+                            await Context.Channel.SendMessageAsync(str[1]+ " "+ c.URL);
+                            return;
+                    }
+                }
+            }
+            
         }
 
         [Command("new")]

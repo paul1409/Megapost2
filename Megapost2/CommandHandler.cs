@@ -14,8 +14,12 @@ namespace Megapost2 {
         
         private DiscordSocketClient client;
         private CommandService service;
+        private string[] welcome = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\welcome.txt"));
+        private string[] leave = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\leave.txt"));
+        Random r;
 
         public async Task Initialize(DiscordSocketClient client) {
+            r = new Random();
             this.client = client;
             service = new CommandService();
             await service.AddModulesAsync(Assembly.GetEntryAssembly());
@@ -36,17 +40,17 @@ namespace Megapost2 {
         }
 
         private async Task Join(SocketGuildUser u) {
-            var welcome = (Path.Combine(Directory.GetCurrentDirectory(), "Messages\\welcome.txt"));
             var img = Path.Combine(Directory.GetCurrentDirectory(), "Newcomers.jpg");
             var channel = client.GetChannel(u.Guild.DefaultChannel.Id) as SocketTextChannel;
-            await channel.SendFileAsync(img, string.Format(usrmsg(welcome), u.Mention));
+            string msg = welcome[r.Next(0, welcome.Length)];
+            await channel.SendFileAsync(img, (string.Format(msg, u.Mention)));
             
         }
 
         private async Task Leave(SocketGuildUser u) {
-            var leave = (Path.Combine(Directory.GetCurrentDirectory(), "Messages\\leave.txt"));
             var channel = client.GetChannel(u.Guild.DefaultChannel.Id) as SocketTextChannel;
-            await channel.SendMessageAsync(string.Format(usrmsg(leave), u.ToString()));
+            string msg = leave[r.Next(0, leave.Length)];
+            await channel.SendMessageAsync(string.Format(msg, u.ToString()));
         }
 
         private string usrmsg(string s) {
