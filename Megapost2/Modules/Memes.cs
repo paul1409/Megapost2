@@ -10,7 +10,7 @@ using Discord.WebSocket;
 
 namespace Megapost2.Modules {
 
-    [Group("meme")]
+    //[Group("meme")]
     public class Memes : ModuleBase<SocketCommandContext> {
 
         string dir = Path.Combine(Directory.GetCurrentDirectory(), "memes.txt");
@@ -23,7 +23,7 @@ namespace Megapost2.Modules {
             else return null;
         }
 
-        [Command]
+        [Command("meme")]
         [Remarks("Attempts to get command")]
         public async Task meme([Remainder] string s) {
             if (clist.exists(s))
@@ -43,17 +43,21 @@ namespace Megapost2.Modules {
                     }
                 }
             }
-            
         }
 
         [Command("new")]
         [Remarks("Adds a new command")]
         public async Task NewMeme([Remainder] string s) {
-            string[] str = s.Split(null);
-            if (str.Length == 2) {
-                clist.add(new Commands(str[0], str[1]));
-                last = str[0];
-                await Context.Channel.SendMessageAsync(":ok_hand:");
+            try {
+                string[] str = s.Split(null);
+                if (str.Length == 2) {
+                    clist.add(new Commands(str[0], str[1]));
+                    last = str[0];
+                    await Context.Channel.SendMessageAsync(":ok_hand:");
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.StackTrace);
             }
         }
 

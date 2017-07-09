@@ -39,5 +39,11 @@ namespace Megapost2.Modules {
             await Context.Channel.SendMessageAsync("Role `" + s + "` has been created");
         }
 
+        [Command("destroy")]
+        public async Task destroy(IRole r) {
+            await Context.Channel.SendMessageAsync(r.ToString() + " has been deleted");
+            await r.DeleteAsync();
+        }
+
     }
 }
