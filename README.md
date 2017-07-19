@@ -1,2 +1,3 @@
 # Megapost2
-A port of the Megapost bot into Discord.NET 1.0
+A Discord bot that performs various functions.
+I'll get to the description eventually.
