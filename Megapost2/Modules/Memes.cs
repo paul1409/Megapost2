@@ -10,7 +10,6 @@ using Discord.WebSocket;
 
 namespace Megapost2.Modules {
 
-    //[Group("meme")]
     public class Memes : ModuleBase<SocketCommandContext> {
 
         string dir = Path.Combine(Directory.GetCurrentDirectory(), "memes.txt");
