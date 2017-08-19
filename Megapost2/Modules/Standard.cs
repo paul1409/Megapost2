@@ -42,6 +42,13 @@ namespace Megapost2.Modules {
             await ReplyAsync(input);
         }
 
+        [Command("avatar")]
+        [Alias("ava")]
+        [Summary("Gets the avatar of a user")]
+        public async Task ava(IGuildUser u) {
+            await ReplyAsync(u.GetAvatarUrl());
+        }
+
         [Command("info")]
         public async Task Info() {
             var application = await Context.Client.GetApplicationInfoAsync();
