@@ -45,5 +45,22 @@ namespace Megapost2.Modules {
             await r.DeleteAsync();
         }
 
+        [Command("color")]
+        public async Task color(IRole r, string color) {
+            uint colorVal;
+            if (!TryParseColor(color, out colorVal)) {
+                await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
+            }
+            await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
+        }
+
+        [Command("rename")]
+        public async Task rename(IRole r, [Remainder] string name) {
+            await r.ModifyAsync(role => { role.Name = name; });
+        }
+
+        bool TryParseColor(string color, out uint val) {
+            return uint.TryParse(color, NumberStyles.HexNumber, null, out val);
+        }
     }
 }
