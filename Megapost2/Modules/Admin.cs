@@ -30,5 +30,7 @@ namespace Megapost2.Modules {
         public async Task Purge(int i) {
             await Context.Guild.PruneUsersAsync(i);
         }
+        
+
     }
 }
