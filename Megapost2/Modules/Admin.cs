@@ -37,6 +37,7 @@ namespace Megapost2.Modules {
             var k = await src.GetUsersAsync().Flatten();
             foreach(IGuildUser u in k) {
                 await u.ModifyAsync(x => { x.Channel = new Optional<IVoiceChannel>(dst); });
+                await ReplyAsync(u.Username + ": :ok_hand:");
             }
         }
     }
