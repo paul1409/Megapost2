@@ -99,8 +99,44 @@ namespace Megapost2.Modules {
             await Context.Channel.SendMessageAsync(builder.ToString());
         }
 
+        [Command("whou")]
+        [Remarks("Gets info on a certain user")]
+        public async Task whou(IUser user) {
+            var guildUser = user as IGuildUser;
+            var builder = new StringBuilder()
+              .AppendLine($"Username: ``{user.Username}#{user.Discriminator}`` {(user.IsBot ? "(BOT)" : string.Empty)} ({user.Id})");
+            if (guildUser != null && !string.IsNullOrWhiteSpace(guildUser.Nickname))
+                builder.AppendLine($"Nickname: {guildUser.Nickname}");
+            if (user?.Game?.Name != null)
+                builder.AppendLine($"Game: {user.Game?.Name}");
+            builder.AppendLine($"Created on: {TimeSummary(user.CreatedAt)}");
+            if (guildUser != null)
+                builder.AppendLine($"Joined on: {TimeSummary(guildUser.JoinedAt)}");
+            var avatar = user.GetAvatarUrl();
+            if (!string.IsNullOrEmpty(avatar))
+                builder.AppendLine(avatar);
+            await ReplyAsync(builder.ToString());
+        }
+
         private static string GetUptime()
             => (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString(@"dd\.hh\:mm\:ss");
         private static string GetHeapSize() => Math.Round(GC.GetTotalMemory(true) / (1024.0 * 1024.0), 2).ToString();
+
+        static string TimeSummary(DateTimeOffset? time) {
+            if (time == null) return "N/A";
+            var timespan = DateTimeOffset.UtcNow - time.Value;
+            if (timespan.TotalDays > 365.0)
+                return $"{time} ({timespan.TotalDays / 365:0.00} years ago)";
+            if (timespan.TotalDays > 1.0)
+                return $"{time} ({timespan.TotalDays:0.00} days ago)";
+            if (timespan.TotalHours > 1.0)
+                return $"{time} ({timespan.TotalHours:0.00} hours ago)";
+            if (timespan.TotalMinutes > 1.0)
+                return $"{time} ({timespan.TotalMinutes:0.00} minutes ago)";
+            if (timespan.TotalSeconds > 1.0)
+                return $"{time} ({timespan.TotalSeconds:0.00} seconds ago)";
+            return $"{time} (moments ago)";
+        }
+
     }
 }

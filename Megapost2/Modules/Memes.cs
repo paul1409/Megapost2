@@ -66,6 +66,7 @@ namespace Megapost2.Modules {
             if (last != null) {
                 clist.undo(last);
                 await Context.Channel.SendMessageAsync(":ok_hand:");
+                last = null;
             }
         }
 

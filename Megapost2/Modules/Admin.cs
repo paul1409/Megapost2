@@ -20,7 +20,7 @@ namespace Megapost2.Modules {
         [Command("ban")]
         [RequireUserPermission(GuildPermission.BanMembers)]
         [Remarks("Bans the mentioned users")]
-        public async Task Ban(IGuildUser u) {
+        public async Task Ban(IUser u) {
             await Context.Guild.AddBanAsync(u);
         }
 
@@ -30,7 +30,14 @@ namespace Megapost2.Modules {
         public async Task Purge(int i) {
             await Context.Guild.PruneUsersAsync(i);
         }
-        
 
+        [Command("move")]
+        [RequireUserPermission(GuildPermission.MuteMembers)]
+        public async Task mute(IVoiceChannel src, IVoiceChannel dst) {
+            var k = await src.GetUsersAsync().Flatten();
+            foreach(IGuildUser u in k) {
+                await u.ModifyAsync(x => { x.Channel = new Optional<IVoiceChannel>(dst); });
+            }
+        }
     }
 }
