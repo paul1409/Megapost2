@@ -15,7 +15,7 @@ namespace Megapost2.Modules {
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task create(string name) {
             await Context.Guild.CreateTextChannelAsync(name);
-            await Context.Channel.SendMessageAsync("`" + name + "`: is now a new channel");
+            await Context.Channel.SendMessageAsync($"`{name}`: is now a new channel");
         }
 
         [Command("destroy")]

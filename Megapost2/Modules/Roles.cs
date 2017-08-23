@@ -19,24 +19,24 @@ namespace Megapost2.Modules {
             foreach (var v in roles)
                 if (v.Name == s) {
                     await u.AddRoleAsync(v);
-                    await Context.Channel.SendMessageAsync("Role `" + s + "` has been added to " + u.Mention);
+                    await Context.Channel.SendMessageAsync($"Role `{s}` has been added to " + u.Mention);
                 }
         }
 
         [Command("take")]
         public async Task take(IGuildUser u, IRole r) {
             var roles = Context.Guild.Roles;
-            foreach (var v in roles)
-                if (v==r) {
-                    await u.RemoveRoleAsync(v);
-                    await Context.Channel.SendMessageAsync("Role `" + r.ToString() + "` has been taken from "+ u.Mention);
-                }
+            if (roles.Contains(r)) {
+                await u.RemoveRoleAsync(r);
+                await Context.Channel.SendMessageAsync("Role `" + r.ToString() + "` has been taken from " + u.Mention);
+            } else await ReplyAsync($"Role {r} could not be found.");
+
         }
 
         [Command("create")]
         public async Task create(string s) {
             await Context.Guild.CreateRoleAsync(s);
-            await Context.Channel.SendMessageAsync("Role `" + s + "` has been created");
+            await Context.Channel.SendMessageAsync($"Role `{s}` has been created");
         }
 
         [Command("destroy")]

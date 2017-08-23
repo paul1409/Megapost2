@@ -18,7 +18,7 @@ namespace Megapost2.Modules {
 
         [Command("google")]
         [Remarks("Google searches the input")]
-        public async Task google([Remainder] string s) {
+        public async Task google(string s) {
             string apiKey = "AIzaSyAi4_XbS4euGFf7LJYH9jLdERF92PRELE0";
             string cx = "006365420480420697386:a5kksrll-pc";
             var search = new CustomsearchService(new BaseClientService.Initializer { ApiKey = apiKey });
@@ -31,7 +31,7 @@ namespace Megapost2.Modules {
                 string link = string.Format("<{0}>", res.Link);
                 result += (title + " " + link + "\n");
             }
-            await Context.Channel.SendMessageAsync("Showing top 10 Google results for **" + s + "**\n" + result);
+            await ReplyAsync($"Showing top 10 Google results for **{s}**\n" + result);
         }
 
         [Command("rtd")]
@@ -42,7 +42,7 @@ namespace Megapost2.Modules {
             int j = int.Parse(str[1]);
             if (i > 5000 || j > 5000) await Context.Channel.SendMessageAsync("Enter something under 5000 you dumb fucks");
             if (i < 0 || j < 0) await Context.Channel.SendMessageAsync("Are you that retarded?");
-            else await Context.Channel.SendMessageAsync("You rolled a `" + j + "` die" + " " + i + " times for a total of: " + rtd(i, j) + "");
+            else await ReplyAsync("You rolled a `" + j + "` die" + " " + i + " times for a total of: " + rtd(i, j) + "");
         }
 
         [Command("choose")]
@@ -58,7 +58,7 @@ namespace Megapost2.Modules {
             string[] str = {"It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely",
                 "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now",
                 "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", " Very doubtful" };
-            await Context.Channel.SendMessageAsync(str[r.Next(str.Length)]);
+            await ReplyAsync(str[r.Next(str.Length)]);
         }
 
         public int rtd(int x, int j) {
