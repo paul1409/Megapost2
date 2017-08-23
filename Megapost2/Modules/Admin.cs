@@ -32,7 +32,8 @@ namespace Megapost2.Modules {
         }
 
         [Command("move")]
-        [RequireUserPermission(GuildPermission.MuteMembers)]
+        [RequireUserPermission(GuildPermission.MoveMembers)]
+        [Remarks("Move all user from the src channel to the dst channel")]
         public async Task mute(IVoiceChannel src, IVoiceChannel dst) {
             var k = await src.GetUsersAsync().Flatten();
             foreach(IGuildUser u in k) {
