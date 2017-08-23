@@ -14,7 +14,7 @@ namespace Megapost2.Modules {
     public class Roles : ModuleBase {
 
         [Command("add")]
-        public async Task add(IGuildUser u, [Remainder] string s) {
+        public async Task add(IGuildUser u, string s) {
             var roles = Context.Guild.Roles;
             foreach (var v in roles)
                 if (v.Name == s) {
@@ -24,17 +24,17 @@ namespace Megapost2.Modules {
         }
 
         [Command("take")]
-        public async Task take(IGuildUser u, [Remainder] string s) {
+        public async Task take(IGuildUser u, IRole r) {
             var roles = Context.Guild.Roles;
             foreach (var v in roles)
-                if (v.Name == s) {
+                if (v==r) {
                     await u.RemoveRoleAsync(v);
-                    await Context.Channel.SendMessageAsync("Role `" + s + "` has been taken from "+ u.Mention);
+                    await Context.Channel.SendMessageAsync("Role `" + r.ToString() + "` has been taken from "+ u.Mention);
                 }
         }
 
         [Command("create")]
-        public async Task create([Remainder] string s) {
+        public async Task create(string s) {
             await Context.Guild.CreateRoleAsync(s);
             await Context.Channel.SendMessageAsync("Role `" + s + "` has been created");
         }
@@ -55,7 +55,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("rename")]
-        public async Task rename(IRole r, [Remainder] string name) {
+        public async Task rename(IRole r, string name) {
             await r.ModifyAsync(role => { role.Name = name; });
         }
 
