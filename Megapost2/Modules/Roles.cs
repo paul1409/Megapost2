@@ -14,13 +14,12 @@ namespace Megapost2.Modules {
     public class Roles : ModuleBase {
 
         [Command("add")]
-        public async Task add(IGuildUser u, string s) {
+        public async Task add(IGuildUser u, IRole r) {
             var roles = Context.Guild.Roles;
-            foreach (var v in roles)
-                if (v.Name == s) {
-                    await u.AddRoleAsync(v);
-                    await Context.Channel.SendMessageAsync($"Role `{s}` has been added to " + u.Mention);
-                }
+            if (roles.Contains(r)) {
+                await u.AddRoleAsync(r);
+                await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been added to " + u.Mention);
+            }
         }
 
         [Command("take")]
@@ -28,7 +27,7 @@ namespace Megapost2.Modules {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
                 await u.RemoveRoleAsync(r);
-                await Context.Channel.SendMessageAsync("Role `" + r.ToString() + "` has been taken from " + u.Mention);
+                await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been taken from " + u.Mention);
             } else await ReplyAsync($"Role {r} could not be found.");
 
         }
