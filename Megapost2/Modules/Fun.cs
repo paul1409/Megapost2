@@ -49,7 +49,7 @@ namespace Megapost2.Modules {
         [Remarks("Chooses between the given items")]
         public async Task choose(params string[] choices) {
             if (choices.Length <= 0) await Context.Channel.SendMessageAsync("Nothing to choose from");
-            else await Context.Channel.SendMessageAsync("I choose: " + choices[r.Next(choices.Length)]);
+            else await ReplyAsync("I choose: " + choices[r.Next(choices.Length)]);
         }
 
         [Command("8ball")]
