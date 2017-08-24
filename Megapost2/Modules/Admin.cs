@@ -31,6 +31,13 @@ namespace Megapost2.Modules {
             await Context.Guild.PruneUsersAsync(i);
         }
 
+        [Command("nickname")]
+        [RequireUserPermission(GuildPermission.ManageNicknames)]
+        [Summary("Allows a mod to change any user's nickname")]
+        public async Task nickname(IGuildUser u, string name) {
+            await u.ModifyAsync(x => { x.Nickname = name; });
+        }
+
         [Command("move")]
         [RequireUserPermission(GuildPermission.MoveMembers)]
         [Remarks("Move all user from the src channel to the dst channel")]
