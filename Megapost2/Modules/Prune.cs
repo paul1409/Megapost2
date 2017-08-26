@@ -59,6 +59,19 @@ namespace Megapost2.Modules {
             }
         }
 
+        [Command("ping")]
+        [Summary("Deletes all mentions in the last i messages")]
+        public async Task ping(int i) {
+            if (i < 0) await ReplyAsync("Cannot delete a negative number of messages");
+            else if (i > 99) await ReplyAsync("Too many to delete");
+            else {
+                var m = await Context.Channel.GetMessagesAsync(i + 1).Flatten();
+                var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
+                await Context.Channel.DeleteMessagesAsync(cmd);
+                await Context.Channel.DeleteMessagesAsync(m.Where(msg => msg.MentionedUserIds.Any() || msg.MentionedRoleIds.Any()));
+            }
+        }
+
         [Command("bot")]
         [Summary("Deletes all messages sent by bots in the last i messages")]
         public async Task bot(int i) {
