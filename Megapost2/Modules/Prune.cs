@@ -25,6 +25,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("embed")]
+        [Summary("Deletes all messages containing embeds/attachments in the last i messages")]
         public async Task embed(int i) {
             if (i < 0) await ReplyAsync("Cannot delete a negative number of messages");
             else if (i > 99) await ReplyAsync("Too many to delete");
@@ -35,6 +36,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("emoji")]
+        [Summary("Deletes all messages containing emoji in the last i messages")]
         public async Task emoji(int i) {
             if (i < 0) await ReplyAsync("Cannot delete a negative number of messages");
             else if (i > 99) await ReplyAsync("Too many to delete");
@@ -45,6 +47,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("mine")]
+        [Summary("Deletes all messages sent by the user in the last i messages")]
         public async Task mine(int i) {
             if (i < 0) await ReplyAsync("Cannot delete a negative number of messages");
             else if (i > 99) await ReplyAsync("Too many to delete");
@@ -55,6 +58,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("bot")]
+        [Summary("Deletes all messages sent by bots in the last i messages")]
         public async Task bot(int i) {
             if (i < 0) await ReplyAsync("Cannot delete a negative number of messages");
             else if (i > 99) await ReplyAsync("Too many to delete");
