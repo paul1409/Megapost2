@@ -31,6 +31,8 @@ namespace Megapost2.Modules {
             else if (i > 99) await ReplyAsync("Too many to delete");
             else {
                 var m = await Context.Channel.GetMessagesAsync(i + 1).Flatten();
+                var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
+                await Context.Channel.DeleteMessagesAsync(cmd);
                 await Context.Channel.DeleteMessagesAsync(m.Where(msg => msg.Embeds.Any() || msg.Attachments.Any()));
             }
         }
