@@ -92,9 +92,9 @@ namespace Megapost2.Modules {
                   .AppendLine($"Region: {server.VoiceRegionId.ToString()}")
                   .AppendLine($"Created: {String.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
                   .AppendLine($"User Count: {server.MemberCount.ToString()}");
-            if (roles.Any()) builder.AppendLine($"Roles: {string.Join(", ", roles)}");
-            builder.AppendLine($"Text Channels: {string.Join(", ", textChannels)}")
-            .AppendLine($"Voice Channels: {string.Join(", ", voiceChannels)}");
+            if (roles.Any()) builder.AppendLine($"Roles: `{string.Join("`, `", roles)}`");
+            builder.AppendLine($"Text Channels: `{string.Join("`, `", textChannels)}`")
+            .AppendLine($"Voice Channels: `{string.Join("`, `", voiceChannels)}`");
             if (!string.IsNullOrEmpty(server.IconUrl))
                 builder.AppendLine(server.IconUrl);
             await Context.Channel.SendMessageAsync(builder.ToString());
