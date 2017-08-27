@@ -45,9 +45,7 @@ namespace Megapost2.Modules {
         [Command("avatar")]
         [Alias("ava")]
         [Summary("Gets the avatar of a user")]
-        public async Task ava(IGuildUser u) {
-            await ReplyAsync(u.GetAvatarUrl());
-        }
+        public async Task ava(IGuildUser u) => await ReplyAsync(u.GetAvatarUrl());
 
         [Command("info")]
         public async Task Info() {
@@ -89,11 +87,14 @@ namespace Megapost2.Modules {
             var voiceChannels = server.Channels.OfType<IVoiceChannel>();
             var roles = server.Roles.Where(r => r.Id != server.EveryoneRole.Id);
             builder.AppendLine($"Name: {server.Name.ToString()}")
-              .AppendLine($"ID: {server.Id.ToString().ToString()}")
-              .AppendLine($"Owner: {owner.Username.ToString()}")
-              .AppendLine($"Region: {server.VoiceRegionId.ToString()}")
-              .AppendLine($"Created: {String.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
-              .AppendLine($"User Count: {server.MemberCount.ToString()}");
+                  .AppendLine($"ID: {server.Id.ToString().ToString()}")
+                  .AppendLine($"Owner: {owner.Username.ToString()}")
+                  .AppendLine($"Region: {server.VoiceRegionId.ToString()}")
+                  .AppendLine($"Created: {String.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
+                  .AppendLine($"User Count: {server.MemberCount.ToString()}");
+            if (roles.Any()) builder.AppendLine($"Roles: {string.Join(", ", roles)}");
+            builder.AppendLine($"Text Channels: {string.Join(", ", textChannels)}")
+            .AppendLine($"Voice Channels: {string.Join(", ", voiceChannels)}");
             if (!string.IsNullOrEmpty(server.IconUrl))
                 builder.AppendLine(server.IconUrl);
             await Context.Channel.SendMessageAsync(builder.ToString());

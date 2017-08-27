@@ -57,10 +57,14 @@ namespace Megapost2.Modules {
                 await ReplyAsync("Too many to delete");
                 return;
             } else {
-                var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
-                await Context.Channel.DeleteMessagesAsync(cmd);
-                var m = await Context.Channel.GetMessagesAsync(i).Flatten();
-                await Context.Channel.DeleteMessagesAsync(m);
+                var pureprune = await Context.Channel.GetMessagesAsync(i).Flatten();
+                if (pureprune.Count() == i) await Context.Channel.DeleteMessagesAsync(pureprune);
+                else {
+                    var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
+                    await Context.Channel.DeleteMessagesAsync(cmd);
+                    var m = await Context.Channel.GetMessagesAsync(i).Flatten();
+                    await Context.Channel.DeleteMessagesAsync(m);
+                }
             }
         }
 
