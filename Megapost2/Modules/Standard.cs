@@ -1,13 +1,17 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Data;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Megapost2.Modules {
     public class Standard : ModuleBase<SocketCommandContext> {
@@ -100,6 +104,30 @@ namespace Megapost2.Modules {
             await Context.Channel.SendMessageAsync(builder.ToString());
         }
 
+        [Command("edgifier")]
+        [Remarks("Makes avatars edgy")]
+        public async Task edge(IGuildUser u) {
+            var ava = u.GetAvatarUrl();
+            WebRequest request = WebRequest.Create(ava);
+            WebResponse response = request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            Bitmap bmp = new Bitmap(responseStream);
+            int width = bmp.Width;
+            int height = bmp.Height;
+            System.Drawing.Color p;
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    p = bmp.GetPixel(x, y);
+                    int avg = (p.R + p.G + p.B) / 3;
+                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, 200, avg, avg));
+                }
+            }
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "edge.png");
+            bmp.Save(path);
+            await Context.Channel.SendFileAsync(path);
+            File.Delete(path);
+        }
+
         [Command("whou")]
         [Remarks("Gets info on a certain user")]
         public async Task whou(IUser user) {
@@ -138,6 +166,6 @@ namespace Megapost2.Modules {
                 return $"{time} ({timespan.TotalSeconds:0.00} seconds ago)";
             return $"{time} (moments ago)";
         }
-
+        
     }
 }
