@@ -79,12 +79,7 @@ namespace Megapost2.Modules {
                 for (int x = 0; x < width; x++) {
                     p = bmp.GetPixel(x, y);
                     int avg = (p.R + p.G + p.B) / 3;
-                    int blue, green;
-                    if (p.B > 170) blue = 255 - p.B;
-                    else blue = p.B;
-                    if (p.G > 170) green = 255 - p.G;
-                    else green = p.G;
-                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, avg, 0, 0));
+                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, 255-avg, 0, 0));
                 }
             }
             var path = Path.Combine(Directory.GetCurrentDirectory(), "edge.png");
