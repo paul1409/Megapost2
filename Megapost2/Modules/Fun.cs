@@ -9,6 +9,9 @@ using Discord.WebSocket;
 using Google.Apis.Services;
 using Google.Apis.Customsearch.v1;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Drawing;
+using System.Net;
 
 namespace Megapost2.Modules {
 
@@ -59,6 +62,35 @@ namespace Megapost2.Modules {
                 "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now",
                 "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", " Very doubtful" };
             await ReplyAsync(str[r.Next(str.Length)]);
+        }
+
+        [Command("edgifier")]
+        [Remarks("Makes avatars edgy")]
+        public async Task edge(IGuildUser u) {
+            var ava = u.GetAvatarUrl();
+            WebRequest request = WebRequest.Create(ava);
+            WebResponse response = request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            Bitmap bmp = new Bitmap(responseStream);
+            int width = bmp.Width;
+            int height = bmp.Height;
+            System.Drawing.Color p;
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    p = bmp.GetPixel(x, y);
+                    int avg = (p.R + p.G + p.B) / 3;
+                    int blue, green;
+                    if (p.B > 170) blue = 255 - p.B;
+                    else blue = p.B;
+                    if (p.G > 170) green = 255 - p.G;
+                    else green = p.G;
+                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, avg, 0, 0));
+                }
+            }
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "edge.png");
+            bmp.Save(path);
+            await Context.Channel.SendFileAsync(path);
+            File.Delete(path);
         }
 
         public int rtd(int x, int j) {
