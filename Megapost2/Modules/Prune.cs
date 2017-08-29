@@ -60,6 +60,7 @@ namespace Megapost2.Modules {
                 var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
                 await Context.Channel.DeleteMessagesAsync(cmd);
                 var m = await Context.Channel.GetMessagesAsync(i).Flatten();
+                if (pred != null) m = m.Where(pred);
                 await Context.Channel.DeleteMessagesAsync(m);
             }
         }
