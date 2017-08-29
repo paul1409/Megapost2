@@ -40,22 +40,25 @@ namespace Megapost2.Modules {
 
         [Command("destroy")]
         public async Task destroy(IRole r) {
-            await Context.Channel.SendMessageAsync(r.ToString() + " has been deleted");
             await r.DeleteAsync();
+            await Context.Channel.SendMessageAsync(r.ToString() + " has been deleted");
         }
 
         [Command("color")]
         public async Task color(IRole r, string color) {
             uint colorVal;
-            if (!TryParseColor(color, out colorVal)) {
+            if (!TryParseColor(color, out colorVal)) 
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
+            else {
+                await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
+                await ReplyAsync(":thumbsup:");
             }
-            await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
         }
 
         [Command("rename")]
         public async Task rename(IRole r, string name) {
             await r.ModifyAsync(role => { role.Name = name; });
+            await ReplyAsync(":thumbsup:");
         }
 
         bool TryParseColor(string color, out uint val) {
