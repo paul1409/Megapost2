@@ -20,7 +20,6 @@ namespace Megapost2.Modules {
         [Remarks("Bans the mentioned users")]
         public async Task Ban(IUser u) => await Context.Guild.AddBanAsync(u);
 
-
         [Command("purge")]
         [RequireUserPermission(GuildPermission.KickMembers)]
         [Remarks("Purges users who haven't been online in specified number of days")]
@@ -28,7 +27,7 @@ namespace Megapost2.Modules {
 
         [Command("nickname")]
         [RequireUserPermission(GuildPermission.ManageNicknames)]
-        [Summary("Allows a mod to change any user's nickname")]
+        [Remarks("Allows a mod to change any user's nickname")]
         public async Task nickname(IGuildUser u, string name) =>
             await u.ModifyAsync(x => { x.Nickname = name; });
         
