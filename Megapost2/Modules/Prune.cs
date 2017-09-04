@@ -49,6 +49,12 @@ namespace Megapost2.Modules {
             await PruneMsg(i, m => m.Author.IsBot);
         }
 
+        [Command("user")]
+        [Summary("Deletes all messages sent by a specified user in the last i messages")]
+        public async Task user(IGuildUser u, int i) {
+            await PruneMsg(i, m => m.Author.Id==u.Id);
+        }
+
         async Task PruneMsg(int i, Func<IMessage, bool> pred = null) {
             if (i < 0) {
                 await ReplyAsync("Cannot delete a negative number of messages");
