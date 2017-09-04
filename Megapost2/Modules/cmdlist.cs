@@ -65,6 +65,7 @@ namespace Megapost2 {
                     break;
                 }
             }
+            file.Close();
             return ret;
         }
 
@@ -158,6 +159,7 @@ namespace Megapost2 {
             StreamReader file = new StreamReader(multidir);
             string line;
             while ((line = file.ReadLine()) != null) list.Add(line.Split(null)[0]);
+            file.Close();
             return list;
         }
     }
