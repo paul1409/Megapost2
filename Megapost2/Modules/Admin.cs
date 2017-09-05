@@ -13,12 +13,16 @@ namespace Megapost2.Modules {
         [Command("kick")]
         [RequireUserPermission(GuildPermission.KickMembers)]
         [Remarks("Kicks all mentioned users")]
-        public async Task Kick(IGuildUser u) => await u.KickAsync();
+        public async Task Kick(params IGuildUser[] u) {
+            foreach (var usr in u) await usr.KickAsync();
+        }
 
         [Command("ban")]
         [RequireUserPermission(GuildPermission.BanMembers)]
         [Remarks("Bans the mentioned users")]
-        public async Task Ban(IUser u) => await Context.Guild.AddBanAsync(u);
+        public async Task Ban(params IUser[] usr) {
+            foreach (var u in usr) await Context.Guild.AddBanAsync(u);
+        }
 
         [Command("purge")]
         [RequireUserPermission(GuildPermission.KickMembers)]
@@ -30,7 +34,7 @@ namespace Megapost2.Modules {
         [Remarks("Allows a mod to change any user's nickname")]
         public async Task nickname(IGuildUser u, string name) =>
             await u.ModifyAsync(x => { x.Nickname = name; });
-        
+
         [Command("move")]
         [RequireUserPermission(GuildPermission.MoveMembers)]
         [Remarks("Move all user from the src channel to the dst channel")]
