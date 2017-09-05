@@ -44,7 +44,6 @@ namespace Megapost2 {
             var channel = client.GetChannel(u.Guild.DefaultChannel.Id) as SocketTextChannel;
             string msg = welcome[r.Next(0, welcome.Length)];
             await channel.SendFileAsync(img, (string.Format(msg, u.Mention)));
-            
         }
 
         private async Task Leave(SocketGuildUser u) {

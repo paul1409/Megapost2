@@ -34,6 +34,13 @@ namespace Megapost2.Modules {
                 await Context.Guild.CreateTextChannelAsync(name);
                 await Context.Channel.SendMessageAsync($"`{name}`: is now a new channel");
             }
+
+            [Command("topic")]
+            [Remarks("sets a topic for this channel")]
+            public async Task topic(ITextChannel channel, string s) {
+                await channel.ModifyAsync(c => c.Topic = s);
+                await ReplyAsync($"Channel {channel} has its topic changed");
+            }
         }
 
         [Group("voice")]
