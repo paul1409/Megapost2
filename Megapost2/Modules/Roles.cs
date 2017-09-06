@@ -14,40 +14,51 @@ namespace Megapost2.Modules {
     public class Roles : ModuleBase {
 
         [Command("add")]
-        public async Task add(IGuildUser u, IRole r) {
+        [Remarks("Adds a role to the provided users")]
+        public async Task add(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
-                await u.AddRoleAsync(r);
-                await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been added to " + u.Mention);
+                foreach (IGuildUser u in usr) {
+                    await u.AddRoleAsync(r);
+                    await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been added to " + u.Mention);
+                }
             }
         }
 
         [Command("take")]
-        public async Task take(IGuildUser u, IRole r) {
+        [Remarks("Takes a role from the provided users")]
+        public async Task take(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
-                await u.RemoveRoleAsync(r);
-                await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been taken from " + u.Mention);
+                foreach (IGuildUser u in usr) {
+                    await u.RemoveRoleAsync(r);
+                    await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been taken from " + u.Mention);
+                }
             } else await ReplyAsync($"Role {r} could not be found.");
 
         }
 
         [Command("create")]
+        [Remarks("Creates a new role")]
         public async Task create(string s) {
             await Context.Guild.CreateRoleAsync(s);
             await Context.Channel.SendMessageAsync($"Role `{s}` has been created");
         }
 
         [Command("destroy")]
+        [Remarks("Destroy the provided role")]
         public async Task destroy(IRole r) {
-            await r.DeleteAsync();
-            await Context.Channel.SendMessageAsync(r.ToString() + " has been deleted");
+            if (Context.Guild.Roles.Contains(r)) {
+                await r.DeleteAsync();
+                await ReplyAsync($"{r} has been deleted");
+            } else await ReplyAsync("Role does not exist");
         }
 
         [Command("color")]
+        [Remarks("Changes the color of a role")]
         public async Task color(IRole r, string color) {
             uint colorVal;
-            if (!TryParseColor(color, out colorVal)) 
+            if (!TryParseColor(color, out colorVal))
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
             else {
                 await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
@@ -56,9 +67,12 @@ namespace Megapost2.Modules {
         }
 
         [Command("rename")]
+        [Remarks("Renames a role")]
         public async Task rename(IRole r, string name) {
-            await r.ModifyAsync(role => { role.Name = name; });
-            await ReplyAsync(":thumbsup:");
+            if (Context.Guild.Roles.Contains(r)) {
+                await r.ModifyAsync(role => { role.Name = name; });
+                await ReplyAsync(":thumbsup:");
+            } else await ReplyAsync("Role does not exist");
         }
 
         bool TryParseColor(string color, out uint val) {
