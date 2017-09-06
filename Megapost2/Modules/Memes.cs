@@ -31,14 +31,13 @@ namespace Megapost2.Modules {
                         await Context.Channel.SendMessageAsync(c.URL);
                         return;
                     }
-                }
-            else if (clist.multiExists(s)) await Context.Channel.SendMessageAsync(clist.contained(s));
+                } else if (clist.multiExists(s)) await Context.Channel.SendMessageAsync(clist.contained(s));
             else {
                 string[] str = s.Split(null);
-                    foreach (Commands c in cmds) {
-                        if (c.name == str[0]) {
-                            await Context.Channel.SendMessageAsync(str[1]+ " "+ c.URL);
-                            return;
+                foreach (Commands c in cmds) {
+                    if (c.name == str[0]) {
+                        await Context.Channel.SendMessageAsync(str[1] + " " + c.URL);
+                        return;
                     }
                 }
             }
@@ -46,14 +45,11 @@ namespace Megapost2.Modules {
 
         [Command("new")]
         [Remarks("Adds a new command")]
-        public async Task NewMeme([Remainder] string s) {
+        public async Task NewMeme(string name, string link) {
             try {
-                string[] str = s.Split(null);
-                if (str.Length == 2) {
-                    clist.add(new Commands(str[0], str[1]));
-                    last = str[0];
-                    await Context.Channel.SendMessageAsync(":ok_hand:");
-                }
+                clist.add(new Commands(name, link));
+                last = link;
+                await Context.Channel.SendMessageAsync(":ok_hand:");
             }
             catch (Exception e) {
                 Console.WriteLine(e.StackTrace);
