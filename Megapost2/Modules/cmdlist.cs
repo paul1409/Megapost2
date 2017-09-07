@@ -29,15 +29,24 @@ namespace Megapost2 {
             return cmds;
         }
 
-        //Checks for command existence
-        public bool exists(string name) {
+        //Gets the name of command list
+        public List<string> cmdList() {
             string[] read = File.ReadAllLines(dir);
             List<string> lines = read.OfType<string>().ToList();
-            foreach (string s in lines) {
-                string[] line = s.Split(null);
-                if (line[0] == name) return true;
-            }
-            return false;
+            return lines;
+        }
+
+        public List<string> cmdNames() {
+            string[] read = File.ReadAllLines(dir);
+            List<string> lines = read.OfType<string>().ToList();
+            List<string> names = new List<string>();
+            foreach (Commands c in reader()) names.Add(c.name);
+            return names;
+        }
+
+        //Checks for command existence
+        public bool exists(string name) {
+            return cmdNames().Contains(name);
         }
 
         //Adds the command

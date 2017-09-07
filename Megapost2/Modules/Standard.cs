@@ -56,7 +56,7 @@ namespace Megapost2.Modules {
         [Command("topic")]
         [Remarks("Responds with the topic of the specified channel.")]
         public async Task topic(ITextChannel c) {
-            await ReplyAsync($"Topic of {c}: {c.Topic}");
+            await ReplyAsync($"Topic of `{c}`: {c.Topic}");
         }
 
         [Command("info")]
@@ -80,9 +80,8 @@ namespace Megapost2.Modules {
         [Command("help")]
         [Remarks("Gets the meme list")]
         public async Task memelist() {
-            string memes = "**MEMES**: ";
-            foreach (Commands c in cmds) memes += "`" + c.name + "` ";
-            memes += "\n***SPECIAL MEMES***: `" + string.Join("`, `", commands.randlist())+"`";
+            string memes = $"**MEMES**: `{string.Join("`, `", commands.cmdNames())}`";
+            memes += $"\n***SPECIAL MEMES***: ` {string.Join("`, `", commands.randlist())}`";
             await Context.Channel.SendMessageAsync("**`meme** must be typed out before each meme");
             await Context.Channel.SendMessageAsync(memes);
         }
@@ -149,6 +148,6 @@ namespace Megapost2.Modules {
                 return $"{time} ({timespan.TotalSeconds:0.00} seconds ago)";
             return $"{time} (moments ago)";
         }
-        
+
     }
 }
