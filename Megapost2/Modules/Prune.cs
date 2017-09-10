@@ -16,7 +16,7 @@ namespace Megapost2.Modules {
         public async Task prune(int i) {
             Console.WriteLine("Deleting: " + i);
             await PruneMsg(i, m => true);
-            Console.WriteLine(Context.User.ToString() + " deleted " + i + " at " + DateTime.Now.ToString(@"dd\:hh\:mm"));
+            Console.WriteLine($"{Context.User.ToString()} deleted {i} at {DateTime.Now.ToString(@"dd\:hh\:mm")}");
         }
 
         [Command("embed")]
@@ -52,7 +52,13 @@ namespace Megapost2.Modules {
         [Command("user")]
         [Summary("Deletes all messages sent by a specified user in the last i messages")]
         public async Task user(IGuildUser u, int i) {
-            await PruneMsg(i, m => m.Author.Id==u.Id);
+            await PruneMsg(i, m => m.Author.Id == u.Id);
+        }
+
+        [Command("reactions")]
+        public async Task react(int i) {
+            var msgs = await Context.Channel.GetMessagesAsync(i).Flatten();
+            foreach (IUserMessage m in msgs) await m.RemoveAllReactionsAsync();
         }
 
         async Task PruneMsg(int i, Func<IMessage, bool> pred = null) {
