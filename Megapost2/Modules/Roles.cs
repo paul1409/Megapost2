@@ -75,6 +75,15 @@ namespace Megapost2.Modules {
             } else await ReplyAsync("Role does not exist");
         }
 
+        [Command("has")]
+        [Remarks("Gets the user's list of roles")]
+        public async Task get(IRole r) {
+            List<string> u = new List<string>();
+            foreach (IGuildUser user in await Context.Guild.GetUsersAsync())
+                if (user.RoleIds.Contains(r.Id)) u.Add(user.Mention);
+            await ReplyAsync($"Users that contain role {r}: {string.Join(" , ", u)}");
+        }
+
         bool TryParseColor(string color, out uint val) {
             return uint.TryParse(color, NumberStyles.HexNumber, null, out val);
         }
