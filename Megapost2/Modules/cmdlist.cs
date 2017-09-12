@@ -148,7 +148,7 @@ namespace Megapost2 {
             foreach (string str in multiNames()) {
                 string[] line = str.Split(null);
                 if (line[0] == s) {
-                    foreach (string l in line) ret += "<" + l + ">" + "\n";
+                    foreach (string l in line) ret += $"<{l}>\n";
                     break;
                 }
             }
