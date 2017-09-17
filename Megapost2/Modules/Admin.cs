@@ -21,7 +21,10 @@ namespace Megapost2.Modules {
         [RequireUserPermission(GuildPermission.BanMembers)]
         [Remarks("Bans the mentioned users")]
         public async Task Ban(params IUser[] usr) {
-            foreach (var u in usr) await Context.Guild.AddBanAsync(u);
+            foreach (var u in usr) {
+                await Context.Guild.AddBanAsync(u);
+                await ReplyAsync($"{u} has been banned");
+            }
         }
 
         [Command("purge")]
