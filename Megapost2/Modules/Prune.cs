@@ -57,6 +57,8 @@ namespace Megapost2.Modules {
 
         [Command("reactions")]
         public async Task react(int i) {
+            var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
+            await Context.Channel.DeleteMessagesAsync(cmd);
             var msgs = await Context.Channel.GetMessagesAsync(i).Flatten();
             foreach (IUserMessage m in msgs) await m.RemoveAllReactionsAsync();
         }

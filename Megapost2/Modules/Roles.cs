@@ -57,8 +57,7 @@ namespace Megapost2.Modules {
         [Command("color")]
         [Remarks("Changes the color of a role")]
         public async Task color(IRole r, string color) {
-            uint colorVal;
-            if (!TryParseColor(color, out colorVal))
+            if (!TryParseColor(color, out uint colorVal))
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
             else {
                 await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
