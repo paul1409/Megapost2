@@ -23,7 +23,9 @@ namespace Megapost2 {
             List<Commands> cmds = new List<Commands>();
             while ((line = file.ReadLine()) != null) {
                 string[] cmd = line.Split(null);
-                cmds.Add(new Commands(cmd[0], cmd[1]));
+                string str = "";
+                foreach(string s in cmd) if (s != cmd[0]) str += " "+s;
+                cmds.Add(new Commands(cmd[0], str));
             }
             file.Close();
             return cmds;
