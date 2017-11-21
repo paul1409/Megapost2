@@ -78,7 +78,7 @@ namespace Megapost2.Modules {
                 string[] str = s.Split(null);
                 if (clist.multiExists(str[0]) && !clist.linkExists(str[0], str[1])) {
                     clist.addMulti(str[0], str[1]);
-                    await Context.Channel.SendMessageAsync(":ok_hand");
+                    await Context.Channel.SendMessageAsync(":ok_hand:");
                 } else await Context.Channel.SendMessageAsync("Command exists");
             }
 
@@ -88,7 +88,7 @@ namespace Megapost2.Modules {
                 string[] str = s.Split(null);
                 if (!clist.multiExists(str[0])) {
                     clist.createMulti(str[0], str[1]);
-                    await Context.Channel.SendMessageAsync(":ok_hand");
+                    await Context.Channel.SendMessageAsync(":ok_hand:");
                 } else await Context.Channel.SendMessageAsync("Command exists");
             }
         }
