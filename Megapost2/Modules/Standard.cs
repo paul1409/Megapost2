@@ -19,6 +19,8 @@ namespace Megapost2.Modules {
 
         static cmdlist commands = new cmdlist();
         List<Commands> cmds = commands.reader();
+        const ImageFormat ImgFormat = ImageFormat.Auto;
+        const ushort AvatarSize = 1024;
 
         [Command("invite")]
         [Summary("Returns the OAuth2 Invite URL of the bot")]
@@ -50,7 +52,7 @@ namespace Megapost2.Modules {
         [Command("avatar")]
         [Alias("ava")]
         [Summary("Gets the avatar of a user")]
-        public async Task ava(IGuildUser u) => await ReplyAsync(u.GetAvatarUrl());
+        public async Task ava(IGuildUser u) => await ReplyAsync(u.GetAvatarUrl(ImgFormat, AvatarSize));
 
 
         [Command("topic")]
@@ -123,7 +125,7 @@ namespace Megapost2.Modules {
             builder.AppendLine($"Created on: {TimeSummary(user.CreatedAt)}");
             if (guildUser != null)
                 builder.AppendLine($"Joined on: {TimeSummary(guildUser.JoinedAt)}");
-            var avatar = user.GetAvatarUrl();
+            var avatar = user.GetAvatarUrl(ImgFormat, AvatarSize);
             if (!string.IsNullOrEmpty(avatar))
                 builder.AppendLine(avatar);
             await ReplyAsync(builder.ToString());

@@ -18,10 +18,14 @@ namespace Megapost2.Modules {
     public class Fun : ModuleBase<SocketCommandContext> {
 
         Random r = new Random();
+        const ImageFormat ImgFormat = ImageFormat.Auto;
+        const ushort AvatarSize = 1024;
 
         [Command("google")]
+        [Alias("g")]
         [Remarks("Google searches the input")]
-        public async Task google(string s) {
+        public async Task google(params string[] str) {
+            string s = string.Join(" ", str.Skip(0));
             string apiKey = "AIzaSyAi4_XbS4euGFf7LJYH9jLdERF92PRELE0";
             string cx = "006365420480420697386:a5kksrll-pc";
             var search = new CustomsearchService(new BaseClientService.Initializer { ApiKey = apiKey });
@@ -34,7 +38,15 @@ namespace Megapost2.Modules {
                 string link = string.Format("<{0}>", res.Link);
                 result += (title + " " + link + "\n");
             }
-            await ReplyAsync($"Showing top 10 Google results for **{s}**\n" + result);
+            var embed = new EmbedBuilder()
+                .WithAuthor(a => a
+                .WithName("Google")
+                .WithIconUrl("https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png"))
+                .WithTitle($"**Search Results for:** {s}")
+                .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(s)}")
+                .WithTimestamp(DateTimeOffset.UtcNow)
+                .WithDescription($"Showing top 10 Google results for **{s}**\n\n" + result);
+            await ReplyAsync("Fetching results ", false, embed);
         }
 
         [Command("rtd")]
@@ -57,7 +69,7 @@ namespace Megapost2.Modules {
 
         [Command("8ball")]
         [Remarks("An 8ball thing, test your fortune or whatever")]
-        public async Task eightBall([Remainder]string s) {
+        public async Task eightBall(params string[] s) {
             string[] str = {"It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely",
                 "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now",
                 "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", " Very doubtful" };
@@ -67,7 +79,7 @@ namespace Megapost2.Modules {
         [Command("edgifier")]
         [Remarks("Makes avatars edgy")]
         public async Task edge(IGuildUser u) {
-            var ava = u.GetAvatarUrl();
+            var ava = u.GetAvatarUrl(ImgFormat, AvatarSize);
             WebRequest request = WebRequest.Create(ava);
             WebResponse response = request.GetResponse();
             Stream responseStream = response.GetResponseStream();
@@ -79,13 +91,25 @@ namespace Megapost2.Modules {
                 for (int x = 0; x < width; x++) {
                     p = bmp.GetPixel(x, y);
                     int avg = (p.R + p.G + p.B) / 3;
-                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, 255-avg, 0, 0));
+                    bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(p.A, 255 - avg, 0, 0));
                 }
             }
             var path = Path.Combine(Directory.GetCurrentDirectory(), "edge.png");
             bmp.Save(path);
             await Context.Channel.SendFileAsync(path);
             File.Delete(path);
+        }
+
+        [Command("regional")]
+        [Alias("r")]
+        public Task Emote([Remainder] string text = "") {
+            var builder = new StringBuilder();
+            foreach (var character in text.ToLower()) {
+                if (character >= 'a' && character <= 'z')
+                    builder.Append($":regional_indicator_{character}:  ");
+                else builder.Append(character);
+            }
+            return ReplyAsync(builder.ToString());
         }
 
         public int rtd(int x, int j) {
