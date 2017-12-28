@@ -40,8 +40,8 @@ namespace Megapost2.Modules {
             }
             var embed = new EmbedBuilder()
                 .WithAuthor(a => a
-                .WithName("Google")
-                .WithIconUrl("https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png"))
+                    .WithName("Google")
+                    .WithIconUrl("https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png"))
                 .WithTitle($"**Search Results for:** {s}")
                 .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(s)}")
                 .WithTimestamp(DateTimeOffset.UtcNow)
@@ -77,6 +77,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("edgifier")]
+        [Alias("edge", "edgify")]
         [Remarks("Makes avatars edgy")]
         public async Task edge(IGuildUser u) {
             var ava = u.GetAvatarUrl(ImgFormat, AvatarSize);
