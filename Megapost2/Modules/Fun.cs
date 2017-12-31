@@ -47,6 +47,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Showing top 10 Google results for **{s}**\n\n" + result);
             await ReplyAsync("Fetching results ", false, embed);
+            await ReplyAsync(string.Format("First result: `" + results.Items.First().Title + "` " + results.Items.First().Link));
         }
 
         [Command("rtd")]
