@@ -45,9 +45,10 @@ namespace Megapost2.Modules {
                 .WithTitle($"**Search Results for:** {s}")
                 .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(s)}")
                 .WithTimestamp(DateTimeOffset.UtcNow)
-                .WithDescription($"Showing top 10 Google results for **{s}**\n\n" + result);
+                .WithDescription($"Showing top 10 Google results for **{s}**\n" + result)
+                .WithColor(new Discord.Color(90,218,85));
             await ReplyAsync("Fetching results ", false, embed);
-            await ReplyAsync(string.Format("First result: `" + results.Items.First().Title + "` " + results.Items.First().Link));
+            await ReplyAsync(string.Format($"First result: `{results.Items.First().Title}` {results.Items.First().Link}");
         }
 
         [Command("rtd")]
@@ -104,6 +105,7 @@ namespace Megapost2.Modules {
 
         [Command("regional")]
         [Alias("r")]
+        [Remarks("Changes text to regional indicators")]
         public Task Emote([Remainder] string text = "") {
             var builder = new StringBuilder();
             foreach (var character in text.ToLower()) {

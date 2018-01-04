@@ -1,17 +1,13 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Data;
-using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Megapost2.Modules {
