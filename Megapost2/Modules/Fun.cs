@@ -42,13 +42,13 @@ namespace Megapost2.Modules {
                 .WithAuthor(a => a
                     .WithName("Google")
                     .WithIconUrl("https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png"))
-                .WithTitle($"**Search Results for:** {s}")
+                .WithTitle($"Search Results for: {s}")
                 .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(s)}")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Showing top 10 Google results for **{s}**\n" + result)
                 .WithColor(new Discord.Color(90,218,85));
             await ReplyAsync("Fetching results ", false, embed);
-            await ReplyAsync(string.Format($"First result: `{results.Items.First().Title}` {results.Items.First().Link}");
+            await ReplyAsync(string.Format($"First result: `{results.Items.First().Title}` {results.Items.First().Link}"));
         }
 
         [Command("rtd")]
