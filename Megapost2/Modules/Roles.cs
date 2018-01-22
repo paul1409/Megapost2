@@ -25,7 +25,7 @@ namespace Megapost2.Modules {
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)
                     .WithIconUrl(Context.User.GetAvatarUrl()))
-                .WithTitle("Removing roles")
+                .WithTitle("Adding roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
                 .WithColor(new Color(90, 218, 85));
@@ -99,7 +99,7 @@ namespace Megapost2.Modules {
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)
                     .WithIconUrl(Context.User.GetAvatarUrl()))
-                .WithTitle("Removing roles")
+                .WithTitle($"People with `{r} role")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Users that contain role {r}: {string.Join(", ", u)}")
                 .WithColor(new Color(90, 218, 85));
