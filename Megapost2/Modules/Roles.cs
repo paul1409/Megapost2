@@ -27,7 +27,7 @@ namespace Megapost2.Modules {
                     .WithIconUrl(Context.User.GetAvatarUrl()))
                 .WithTitle("Removing roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
-                .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(" ,", Array.ConvertAll(usr, x => x.Mention))}")
+                .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
                 .WithColor(new Color(90, 218, 85));
                 await ReplyAsync("", false, embed);
             } else await ReplyAsync($"Role `{r} could not be found");
@@ -47,7 +47,7 @@ namespace Megapost2.Modules {
                     .WithIconUrl(Context.User.GetAvatarUrl()))
                 .WithTitle("Removing roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
-                .WithDescription($"Role `{r.ToString()}` has been taken from: {string.Join(" ,", Array.ConvertAll(usr, x => x.Mention))}")
+                .WithDescription($"Role `{r.ToString()}` has been taken from: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
                 .WithColor(new Color(90, 218, 85));
                 await ReplyAsync("", false, embed);
             } else await ReplyAsync($"Role {r} could not be found.");
@@ -101,7 +101,7 @@ namespace Megapost2.Modules {
                     .WithIconUrl(Context.User.GetAvatarUrl()))
                 .WithTitle("Removing roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
-                .WithDescription($"Users that contain role {r}: {string.Join(" ,", u)}")
+                .WithDescription($"Users that contain role {r}: {string.Join(", ", u)}")
                 .WithColor(new Color(90, 218, 85));
             await ReplyAsync("", false, embed);
         }
