@@ -20,9 +20,17 @@ namespace Megapost2.Modules {
             if (roles.Contains(r)) {
                 foreach (IGuildUser u in usr) {
                     await u.AddRoleAsync(r);
-                    await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been added to " + u.Mention);
                 }
-            }
+                var embed = new EmbedBuilder()
+                .WithAuthor(a => a
+                    .WithName(Context.User.Username)
+                    .WithIconUrl(Context.User.GetAvatarUrl()))
+                .WithTitle("Removing roles")
+                .WithTimestamp(DateTimeOffset.UtcNow)
+                .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(" ,", Array.ConvertAll(usr, x => x.Mention))}")
+                .WithColor(new Color(90, 218, 85));
+                await ReplyAsync("", false, embed);
+            } else await ReplyAsync($"Role `{r} could not be found");
         }
 
         [Command("take")]
@@ -32,10 +40,17 @@ namespace Megapost2.Modules {
             if (roles.Contains(r)) {
                 foreach (IGuildUser u in usr) {
                     await u.RemoveRoleAsync(r);
-                    await Context.Channel.SendMessageAsync($"Role `{r.ToString()}` has been taken from " + u.Mention);
                 }
+                var embed = new EmbedBuilder()
+                .WithAuthor(a => a
+                    .WithName(Context.User.Username)
+                    .WithIconUrl(Context.User.GetAvatarUrl()))
+                .WithTitle("Removing roles")
+                .WithTimestamp(DateTimeOffset.UtcNow)
+                .WithDescription($"Role `{r.ToString()}` has been taken from: {string.Join(" ,", Array.ConvertAll(usr, x => x.Mention))}")
+                .WithColor(new Color(90, 218, 85));
+                await ReplyAsync("", false, embed);
             } else await ReplyAsync($"Role {r} could not be found.");
-
         }
 
         [Command("create")]
@@ -61,7 +76,7 @@ namespace Megapost2.Modules {
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
             else {
                 await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
-                await ReplyAsync(":thumbsup:");
+                await ReplyAsync($"Role `{r} has its color changed.");
             }
         }
 
@@ -80,7 +95,15 @@ namespace Megapost2.Modules {
             List<string> u = new List<string>();
             foreach (IGuildUser user in await Context.Guild.GetUsersAsync())
                 if (user.RoleIds.Contains(r.Id)) u.Add(user.Mention);
-            await ReplyAsync($"Users that contain role {r}: {string.Join(" , ", u)}");
+            var embed = new EmbedBuilder()
+                .WithAuthor(a => a
+                    .WithName(Context.User.Username)
+                    .WithIconUrl(Context.User.GetAvatarUrl()))
+                .WithTitle("Removing roles")
+                .WithTimestamp(DateTimeOffset.UtcNow)
+                .WithDescription($"Users that contain role {r}: {string.Join(" ,", u)}")
+                .WithColor(new Color(90, 218, 85));
+            await ReplyAsync("", false, embed);
         }
 
         bool TryParseColor(string color, out uint val) {
