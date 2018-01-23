@@ -28,7 +28,7 @@ namespace Megapost2.Modules {
                 .WithTitle("Adding roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
-                .WithColor(new Color(90, 218, 85));
+                .WithColor(new Color(28, 165, 255));
                 await ReplyAsync("", false, embed);
             } else await ReplyAsync($"Role `{r} could not be found");
         }
@@ -48,7 +48,7 @@ namespace Megapost2.Modules {
                 .WithTitle("Removing roles")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Role `{r.ToString()}` has been taken from: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
-                .WithColor(new Color(90, 218, 85));
+                .WithColor(new Color(255, 0, 0));
                 await ReplyAsync("", false, embed);
             } else await ReplyAsync($"Role {r} could not be found.");
         }
