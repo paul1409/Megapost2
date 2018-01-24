@@ -70,7 +70,7 @@ namespace Megapost2.Modules {
                 $"{Format.Bold("Stats")}\n" +
                 $"- Heap Size: {GetHeapSize()} MB\n" +
                 $"- Guilds: {(Context.Client as DiscordSocketClient).Guilds.Count}\n" +
-                $"- Channels: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Channels.Count)}" +
+                $"- Channels: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Channels.Count)}\n" +
                 $"- Users: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Users.Count)}"
             );
         }

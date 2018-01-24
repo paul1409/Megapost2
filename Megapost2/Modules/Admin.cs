@@ -14,7 +14,10 @@ namespace Megapost2.Modules {
         [RequireUserPermission(GuildPermission.KickMembers)]
         [Remarks("Kicks all mentioned users")]
         public async Task Kick(params IGuildUser[] u) {
-            foreach (var usr in u) await usr.KickAsync();
+            foreach (var usr in u) {
+                await usr.KickAsync();
+                await ReplyAsync($"{usr} has been banned");
+            }
         }
 
         [Command("ban")]
