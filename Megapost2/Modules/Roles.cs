@@ -18,9 +18,7 @@ namespace Megapost2.Modules {
         public async Task add(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
-                foreach (IGuildUser u in usr) {
-                    await u.AddRoleAsync(r);
-                }
+                foreach (IGuildUser u in usr) await u.AddRoleAsync(r);
                 var embed = new EmbedBuilder()
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)
@@ -38,9 +36,7 @@ namespace Megapost2.Modules {
         public async Task take(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
-                foreach (IGuildUser u in usr) {
-                    await u.RemoveRoleAsync(r);
-                }
+                foreach (IGuildUser u in usr) await u.RemoveRoleAsync(r);
                 var embed = new EmbedBuilder()
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)
@@ -70,7 +66,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("color")]
-        [Remarks("Changes the color of a role")]
+        [Remarks("Changes the color of a role via hex code")]
         public async Task color(IRole r, string color) {
             if (!TryParseColor(color, out uint colorVal))
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");

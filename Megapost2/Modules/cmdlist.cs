@@ -1,4 +1,4 @@
-﻿/** cmdlist class **/
+﻿/** cmdlist class, central controller for commands **/
 
 using System;
 using System.Collections.Generic;
@@ -38,6 +38,7 @@ namespace Megapost2 {
             return lines;
         }
 
+        //Gets the names of the commands
         public List<string> cmdNames() {
             string[] read = File.ReadAllLines(dir);
             List<string> lines = read.OfType<string>().ToList();
@@ -84,7 +85,7 @@ namespace Megapost2 {
         public bool multiExists(string name) {
             foreach (string s in multiNames()) {
                 string[] line = s.Split(null);
-                if (line[0] == name) return true;
+                if (line.Contains(name)) return true;
             }
             return false;
         }
@@ -95,8 +96,7 @@ namespace Megapost2 {
             List<string> lines = read.OfType<string>().ToList();
             foreach (string str in lines) {
                 string[] line = s.Split(null);
-                if (line[0] == s)
-                    foreach (string links in line) if (links == l) return true;
+                if (line.Contains(s) && line.Contains(l)) return true;
             }
             return false;
         }
@@ -123,7 +123,7 @@ namespace Megapost2 {
                 List<string> lines = read.OfType<string>().ToList();
                 foreach (string s in multiNames()) {
                     string[] line = s.Split(null);
-                    if (line[0] == n)
+                    if (line.Contains(n))
                         if (!line.Contains(l)) {
                             string str = s + " " + l;
                             lines.Remove(s);
@@ -149,7 +149,7 @@ namespace Megapost2 {
             List<string> lines = read.OfType<string>().ToList();
             foreach (string str in multiNames()) {
                 string[] line = str.Split(null);
-                if (line[0] == s) {
+                if (line.Contains(s)) {
                     foreach (string l in line) ret += $"<{l}>\n";
                     break;
                 }

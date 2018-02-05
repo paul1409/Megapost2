@@ -80,8 +80,7 @@ namespace Megapost2.Modules {
         public async Task memelist() {
             string memes = $"**MEMES**: `{string.Join("`, `", commands.cmdNames())}`";
             memes += $"\n***SPECIAL MEMES***: ` {string.Join("`, `", commands.randlist())}`";
-            await Context.Channel.SendMessageAsync("**`meme** must be typed out before each meme");
-            await Context.Channel.SendMessageAsync(memes);
+            await Context.Channel.SendMessageAsync($"**`meme** must be typed out before each meme\n{memes}");
         }
 
         [Command("serverinfo")]

@@ -116,6 +116,15 @@ namespace Megapost2.Modules {
             return ReplyAsync(builder.ToString());
         }
 
+        [Command("tts")]
+        [Remarks("Echo but with text-to-speech")]
+        public async Task TTSecho([Remainder] string input) {
+            var m = await Context.Channel.GetMessagesAsync(1).Flatten();
+            await Context.Channel.DeleteMessagesAsync(m);
+            await ReplyAsync(input, true);
+        }
+
+
         public int rtd(int x, int j) {
             int total = 0;
             int n = 0;
