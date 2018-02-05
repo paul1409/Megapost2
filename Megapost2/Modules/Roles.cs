@@ -72,7 +72,7 @@ namespace Megapost2.Modules {
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
             else {
                 await r.ModifyAsync(role => { role.Color = new Optional<Color>(new Color(colorVal)); });
-                await ReplyAsync($"Role `{r} has its color changed.");
+                await ReplyAsync($"Role `{r}` has its color changed.");
             }
         }
 
