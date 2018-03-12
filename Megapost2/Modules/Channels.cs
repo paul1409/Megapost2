@@ -14,10 +14,12 @@ namespace Megapost2.Modules {
         [Command("destroy")]
         [Alias("delete")]
         [Summary("Destroys a channel provided a name")]
-        public async Task destroy(IGuildChannel c) {
-            string cname = c.Name;
-            await c.DeleteAsync();
-            await Context.Channel.SendMessageAsync($"`{cname}`: is no longer a channel");
+        public async Task destroy(params IGuildChannel[] channels) {
+            foreach (IGuildChannel c in channels) {
+                string cname = c.Name;
+                await c.DeleteAsync();
+                await Context.Channel.SendMessageAsync($"`{cname}`: is no longer a channel");
+            }
         }
 
         [Command("rename")]

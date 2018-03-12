@@ -58,11 +58,13 @@ namespace Megapost2.Modules {
 
         [Command("destroy")]
         [Remarks("Destroy the provided role")]
-        public async Task destroy(IRole r) {
-            if (Context.Guild.Roles.Contains(r)) {
-                await r.DeleteAsync();
-                await ReplyAsync($"{r} has been deleted");
-            } else await ReplyAsync("Role does not exist");
+        public async Task destroy(params IRole[] r) {
+            foreach (IRole role in r) {
+                if (Context.Guild.Roles.Contains(role)) {
+                    await role.DeleteAsync();
+                    await ReplyAsync($"{role} has been deleted");
+                } else await ReplyAsync("Role does not exist");
+            }
         }
 
         [Command("color")]
