@@ -21,39 +21,27 @@ namespace Megapost2.Modules {
 
         [Command("embed")]
         [Summary("Deletes all messages containing embeds/attachments in the last i messages")]
-        public async Task embed(int i) {
-            await PruneMsg(i, msg => msg.Embeds.Any() || msg.Attachments.Any());
-        }
+        public async Task embed(int i) => await PruneMsg(i, msg => msg.Embeds.Any() || msg.Attachments.Any());
 
         [Command("emoji")]
         [Summary("Deletes all messages containing emoji in the last i messages")]
-        public async Task emoji(int i) {
-            await PruneMsg(i, ms => ms.Tags.Any(t => t.Type == TagType.Emoji));
-        }
+        public async Task emoji(int i) => await PruneMsg(i, ms => ms.Tags.Any(t => t.Type == TagType.Emoji));
 
         [Command("mine")]
         [Summary("Deletes all messages sent by the user in the last i messages")]
-        public async Task mine(int i) {
-            await PruneMsg(i, msg => msg.Author.Id == Context.User.Id);
-        }
+        public async Task mine(int i) => await PruneMsg(i, msg => msg.Author.Id == Context.User.Id);
 
         [Command("ping")]
         [Summary("Deletes all mentions in the last i messages")]
-        public async Task ping(int i) {
-            await PruneMsg(i, msg => msg.MentionedUserIds.Any() || msg.MentionedRoleIds.Any());
-        }
+        public async Task ping(int i) => await PruneMsg(i, msg => msg.MentionedUserIds.Any() || msg.MentionedRoleIds.Any());
 
         [Command("bot")]
         [Summary("Deletes all messages sent by bots in the last i messages")]
-        public async Task bot(int i) {
-            await PruneMsg(i, m => m.Author.IsBot);
-        }
+        public async Task bot(int i) => await PruneMsg(i, m => m.Author.IsBot);
 
         [Command("user")]
         [Summary("Deletes all messages sent by a specified user in the last i messages")]
-        public async Task user(IGuildUser u, int i) {
-            await PruneMsg(i, m => m.Author.Id == u.Id);
-        }
+        public async Task user(IGuildUser u, int i) => await PruneMsg(i, m => m.Author.Id == u.Id);
 
         [Command("reactions")]
         public async Task react(int i) {

@@ -24,9 +24,7 @@ namespace Megapost2.Modules {
 
         [Command("rename")]
         [Summary("Renames a channel")]
-        public async Task rename(IGuildChannel c, string s) {
-            await c.ModifyAsync(xc => { xc.Name = s; });
-        }
+        public async Task rename(IGuildChannel c, string s) => await c.ModifyAsync(xc => { xc.Name = s; });
 
         [Group("text")]
         public class TextChannel : ModuleBase<SocketCommandContext> {
