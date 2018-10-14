@@ -66,6 +66,13 @@ namespace Megapost2.Modules {
             }
         }
 
+        [Command("remove")]
+        [Remarks("Removes a meme")]
+        public async Task Remove(string name) {
+            clist.remove(name);
+            await Context.Channel.SendMessageAsync(":ok_hand:");
+        }
+
         [Group("multi")]
         public class Multi : ModuleBase<SocketCommandContext> {
             string multidir = Path.Combine(Directory.GetCurrentDirectory(), "randmemes.txt");

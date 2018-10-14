@@ -164,6 +164,11 @@ namespace Megapost2 {
             w.Close();
         }
 
+        //Removes a command
+        public void remove(string s) {
+            File.WriteAllLines(dir, File.ReadLines(dir).Where(l => !l.Contains(s)).ToList());
+        }
+
         //Gets a list from the multidir
         public List<string> randlist() {
             List<string> list = new List<string>();
@@ -173,5 +178,6 @@ namespace Megapost2 {
             file.Close();
             return list;
         }
+
     }
 }

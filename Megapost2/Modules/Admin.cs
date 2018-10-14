@@ -20,14 +20,22 @@ namespace Megapost2.Modules {
             }
         }
 
-        [Command("ban")]
+        [Group("ban")]
         [RequireUserPermission(GuildPermission.BanMembers)]
-        [Remarks("Bans the mentioned users")]
-        public async Task Ban(params IUser[] usr) {
-            foreach (var u in usr) {
-                await Context.Guild.AddBanAsync(u);
-                await ReplyAsync($"{u} has been banned");
+        public class BanGroup : ModuleBase {
+
+            [Remarks("Bans the provided users")]
+            public async Task Ban(params IGuildUser[] usr) {
+                foreach (var u in usr) {
+                    await Context.Guild.AddBanAsync(u);
+                    await ReplyAsync($"{u} has been banned");
+                }
             }
+
+            public async Task Ban(params ulong[] usr) {
+                await Task.WhenAll(usr.Select(u => Context.Guild.AddBanAsync(u)));
+            }
+            
         }
 
         [Command("softban")]
