@@ -88,7 +88,7 @@ namespace Megapost2.Modules {
         }
 
         [Command("has")]
-        [Remarks("Gets the user's list of roles")]
+        [Remarks("Retrieves a ist of who has a certain role")]
         public async Task get(IRole r) {
             List<string> u = new List<string>();
             foreach (IGuildUser user in await Context.Guild.GetUsersAsync())
@@ -97,12 +97,28 @@ namespace Megapost2.Modules {
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)
                     .WithIconUrl(Context.User.GetAvatarUrl()))
-                .WithTitle($"People with `{r} role")
+                .WithTitle($"People with {r} role")
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Users that contain role {r}: {string.Join(", ", u)}")
                 .WithColor(new Color(90, 218, 85));
             await ReplyAsync("", false, embed);
         }
+
+        [Command("user")]
+        [Remarks("Retrieves a ist of who has a certain role")]
+        public async Task user(IGuildUser u) {
+            var roles = u.Guild.Roles;
+            var embed = new EmbedBuilder()
+                .WithAuthor(a => a
+                    .WithName(Context.User.Username)
+                    .WithIconUrl(Context.User.GetAvatarUrl()))
+                .WithTitle($"{u} contains the following roles")
+                .WithTimestamp(DateTimeOffset.UtcNow)
+                .WithDescription($"{string.Join(", ", roles)}")
+                .WithColor(new Color(90, 218, 85));
+            await ReplyAsync("", false, embed);
+        }
+
 
         bool TryParseColor(string color, out uint val) {
             return uint.TryParse(color, NumberStyles.HexNumber, null, out val);
