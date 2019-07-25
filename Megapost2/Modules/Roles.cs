@@ -27,7 +27,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Role `{r.ToString()}` has been added to: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
                 .WithColor(new Color(28, 165, 255));
-                await ReplyAsync("", false, embed);
+                await ReplyAsync("", false, embed.Build());
             } else await ReplyAsync($"Role `{r} could not be found");
         }
 
@@ -45,7 +45,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Role `{r.ToString()}` has been taken from: {string.Join(", ", Array.ConvertAll(usr, x => x.Mention))}")
                 .WithColor(new Color(255, 0, 0));
-                await ReplyAsync("", false, embed);
+                await ReplyAsync("", false, embed.Build());
             } else await ReplyAsync($"Role {r} could not be found.");
         }
 
@@ -101,7 +101,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Users that contain role {r}: {string.Join(", ", u)}")
                 .WithColor(new Color(90, 218, 85));
-            await ReplyAsync("", false, embed);
+            await ReplyAsync("", false, embed.Build());
         }
 
         [Command("user")]
@@ -116,7 +116,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"{string.Join(", ", roles)}")
                 .WithColor(new Color(90, 218, 85));
-            await ReplyAsync("", false, embed);
+            await ReplyAsync("", false, embed.Build());
         }
 
 

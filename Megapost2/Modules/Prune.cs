@@ -45,9 +45,9 @@ namespace Megapost2.Modules {
 
         [Command("reactions")]
         public async Task react(int i) {
-            var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
-            await Context.Channel.DeleteMessagesAsync(cmd);
-            var msgs = await Context.Channel.GetMessagesAsync(i).Flatten();
+            var cmd = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
+            await Context.Channel.DeleteMessageAsync(cmd.FirstOrDefault());
+            var msgs = await Context.Channel.GetMessagesAsync(i).FlattenAsync();
             foreach (IUserMessage m in msgs) await m.RemoveAllReactionsAsync();
         }
 
@@ -59,11 +59,11 @@ namespace Megapost2.Modules {
                 await ReplyAsync("Too many to delete");
                 return;
             } else {
-                var cmd = await Context.Channel.GetMessagesAsync(1).Flatten();
-                await Context.Channel.DeleteMessagesAsync(cmd);
-                var m = await Context.Channel.GetMessagesAsync(i).Flatten();
+                var cmd = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
+                await Context.Channel.DeleteMessageAsync(cmd.FirstOrDefault());
+                var m = await Context.Channel.GetMessagesAsync(i).FlattenAsync();
                 if (pred != null) m = m.Where(pred);
-                await Context.Channel.DeleteMessagesAsync(m);
+                foreach (var msg in m) await Context.Channel.DeleteMessageAsync(msg);
             }
         }
 

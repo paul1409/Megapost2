@@ -64,7 +64,7 @@ namespace Megapost2.Modules {
         [RequireUserPermission(GuildPermission.MoveMembers)]
         [Remarks("Move all user from the src channel to the dst channel")]
         public async Task Move(IVoiceChannel src, IVoiceChannel dst) {
-            var k = await src.GetUsersAsync().Flatten();
+            var k = await src.GetUsersAsync().FlattenAsync();
             foreach (IGuildUser u in k) {
                 await u.ModifyAsync(x => { x.Channel = new Optional<IVoiceChannel>(dst); });
                 await ReplyAsync(u.Username + ": :ok_hand:");

@@ -47,7 +47,7 @@ namespace Megapost2.Modules {
                 .WithTimestamp(DateTimeOffset.UtcNow)
                 .WithDescription($"Showing top 10 Google results for **{s}**\n" + result)
                 .WithColor(new Discord.Color(90,218,85));
-            await ReplyAsync("Fetching results ", false, embed);
+            await ReplyAsync("Fetching results ", false, embed.Build());
             await ReplyAsync(string.Format($"First result: `{results.Items.First().Title}` {results.Items.First().Link}"));
         }
 
@@ -119,8 +119,8 @@ namespace Megapost2.Modules {
         [Command("tts")]
         [Remarks("Echo but with text-to-speech")]
         public async Task TTSecho([Remainder] string input) {
-            var m = await Context.Channel.GetMessagesAsync(1).Flatten();
-            await Context.Channel.DeleteMessagesAsync(m);
+            var m = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
+            await Context.Channel.DeleteMessageAsync(m.FirstOrDefault());
             await ReplyAsync(input, true);
         }
 

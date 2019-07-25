@@ -40,8 +40,8 @@ namespace Megapost2.Modules {
         [Alias("echo")]
         [Summary("Echos the provided input")]
         public async Task Say([Remainder] string input) {
-            var m = await Context.Channel.GetMessagesAsync(1).Flatten();
-            await Context.Channel.DeleteMessagesAsync(m);
+            var m = await Context.Channel.GetMessagesAsync(1).FlattenAsync();
+            await Context.Channel.DeleteMessageAsync(m.FirstOrDefault());
             await ReplyAsync(input);
         }
 
@@ -113,8 +113,8 @@ namespace Megapost2.Modules {
               .AppendLine($"Username: ``{user.Username}#{user.Discriminator}`` {(user.IsBot ? "(BOT)" : string.Empty)} ({user.Id})");
             if (guildUser != null && !string.IsNullOrWhiteSpace(guildUser.Nickname))
                 builder.AppendLine($"Nickname: {guildUser.Nickname}");
-            if (user?.Game?.Name != null)
-                builder.AppendLine($"Game: {user.Game?.Name}");
+            if (user?.Activity?.Name != null)
+                builder.AppendLine($"Currently doing: {user.Activity?.Name}");
             builder.AppendLine($"Created on: {TimeSummary(user.CreatedAt)}");
             if (guildUser != null)
                 builder.AppendLine($"Joined on: {TimeSummary(guildUser.JoinedAt)}");

@@ -22,7 +22,7 @@ namespace Megapost2 {
             r = new Random();
             this.client = client;
             service = new CommandService();
-            await service.AddModulesAsync(Assembly.GetEntryAssembly());
+            await service.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             client.MessageReceived += HandleCommandAsync;
             client.UserJoined += Join;
             client.UserLeft += Leave;
@@ -34,7 +34,7 @@ namespace Megapost2 {
             var e = new SocketCommandContext(client, msg);
             int argPos = 0;
             if (msg.HasCharPrefix('`', ref argPos)) {
-                var result = await service.ExecuteAsync(e, argPos);
+                var result = await service.ExecuteAsync(e, argPos, null);
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand) await e.Channel.SendMessageAsync(result.ErrorReason);
             }
         }
