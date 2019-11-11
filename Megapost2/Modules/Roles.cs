@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -107,7 +106,7 @@ namespace Megapost2.Modules {
         [Command("user")]
         [Remarks("Retrieves a ist of who has a certain role")]
         public async Task user(IGuildUser u) {
-            var roles = u.Guild.Roles;
+            var roles = u.RoleIds;
             var embed = new EmbedBuilder()
                 .WithAuthor(a => a
                     .WithName(Context.User.Username)

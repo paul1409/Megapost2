@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord.Commands;
 using System.IO;
-using Discord;
 
 namespace Megapost2 {
     public class CommandHandler {
@@ -29,7 +25,7 @@ namespace Megapost2 {
         }
 
         private async Task HandleCommandAsync(SocketMessage s) {
-            var msg = s as SocketUserMessage;
+            SocketUserMessage msg = s as SocketUserMessage;
             if (msg == null) return;
             var e = new SocketCommandContext(client, msg);
             int argPos = 0;

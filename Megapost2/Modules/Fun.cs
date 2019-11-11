@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using Google.Apis.Services;
 using Google.Apis.Customsearch.v1;
-using System.Text.RegularExpressions;
 using System.IO;
 using System.Drawing;
 using System.Net;
@@ -127,9 +124,8 @@ namespace Megapost2.Modules {
 
         public int rtd(int x, int j) {
             int total = 0;
-            int n = 0;
             for (int i = 0; i < x; i++) {
-                n = r.Next(j + 1);
+                int n = r.Next(j + 1);
                 if (n != 0) total += n;
             }
             return total;

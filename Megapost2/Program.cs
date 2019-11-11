@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord;
@@ -22,7 +19,7 @@ namespace Megapost2 {
             try {
                 await client.LoginAsync(TokenType.Bot, token.ReadLine());
             }
-            catch (Exception e) { Console.WriteLine("Token missing"); }
+            catch (Exception e) { Console.WriteLine("Token missing" + e.ToString()); }
             await client.StartAsync();
             handler = new CommandHandler();
             await handler.Initialize(client);
