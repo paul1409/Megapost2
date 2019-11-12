@@ -41,7 +41,6 @@ namespace Megapost2 {
         //Gets the names of the commands
         public List<string> cmdNames() {
             string[] read = File.ReadAllLines(dir);
-            List<string> lines = read.OfType<string>().ToList();
             List<string> names = new List<string>();
             foreach (Commands c in reader()) names.Add(c.name);
             return names;
