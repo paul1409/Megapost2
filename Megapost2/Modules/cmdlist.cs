@@ -7,9 +7,8 @@ using System.Linq;
 
 namespace Megapost2 {
     class cmdlist {
-
-        string dir = Path.Combine(Directory.GetCurrentDirectory(), "memes.txt");
-        string multidir = Path.Combine(Directory.GetCurrentDirectory(), "randmemes.txt");
+        readonly string dir = Path.Combine(Directory.GetCurrentDirectory(), "memes.txt");
+        readonly string multidir = Path.Combine(Directory.GetCurrentDirectory(), "randmemes.txt");
         StreamReader file;
         Random rand;
         public cmdlist() {
@@ -24,7 +23,7 @@ namespace Megapost2 {
             while ((line = file.ReadLine()) != null) {
                 string[] cmd = line.Split(null);
                 string str = "";
-                foreach(string s in cmd) if (s != cmd[0]) str += " "+s;
+                foreach (string s in cmd) if (s != cmd[0]) str += " " + s;
                 cmds.Add(new Commands(cmd[0], str));
             }
             file.Close();
@@ -40,7 +39,6 @@ namespace Megapost2 {
 
         //Gets the names of the commands
         public List<string> cmdNames() {
-            string[] read = File.ReadAllLines(dir);
             List<string> names = new List<string>();
             foreach (Commands c in reader()) names.Add(c.name);
             return names;
@@ -111,8 +109,7 @@ namespace Megapost2 {
 
         //Creates a new command with one link
         public void createMulti(string n, string l) {
-            try { File.AppendAllText(multidir, n + " " + l); }
-            catch (Exception e) { Console.WriteLine(e.StackTrace); }
+            try { File.AppendAllText(multidir, n + " " + l); } catch (Exception e) { Console.WriteLine(e.StackTrace); }
         }
 
         //Adds a new link to a previously existing command
@@ -122,16 +119,14 @@ namespace Megapost2 {
                 List<string> lines = read.OfType<string>().ToList();
                 foreach (string s in multiNames()) {
                     string[] line = s.Split(null);
-                    if (line.Contains(n))
-                        if (!line.Contains(l)) {
-                            string str = s + " " + l;
-                            lines.Remove(s);
-                            lines.Add(str);
-                            File.WriteAllLines(multidir, lines);
-                        }
+                    if (line.Contains(n) && !line.Contains(l)) {
+                        string str = s + " " + l;
+                        lines.Remove(s);
+                        lines.Add(str);
+                        File.WriteAllLines(multidir, lines);
+                    }
                 }
-            }
-            catch (Exception e) { Console.WriteLine(e.StackTrace); }
+            } catch (Exception e) { Console.WriteLine(e.StackTrace); }
         }
 
         //Gets the names of the commands
