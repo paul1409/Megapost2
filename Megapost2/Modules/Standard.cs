@@ -63,7 +63,8 @@ namespace Megapost2.Modules {
                 $"- Author: {application.Owner.Username} (ID {application.Owner.Id})\n" +
                 $"- Library: Discord.Net ({DiscordConfig.Version})\n" +
                 $"- Runtime: {RuntimeInformation.FrameworkDescription} {RuntimeInformation.OSArchitecture}\n" +
-                $"- Uptime: {GetUptime()}\n\n" +
+                $"- Uptime: {GetUptime()}\n" +
+                $"- Latency: {Context.Client.Latency} ms\n\n" +
 
                 $"{Format.Bold("Stats")}\n" +
                 $"- Heap Size: {GetHeapSize()} MB\n" +
