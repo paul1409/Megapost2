@@ -8,11 +8,11 @@ namespace Megapost2.Modules {
         [Command("join")]
         [Remarks("Joins the voice channel of the one who called the command")]
         [RequireContext(ContextType.Guild)]
-        public async Task join() => await (Context.User as IVoiceState).VoiceChannel.ConnectAsync();
+        public async Task Join() => await (Context.User as IVoiceState).VoiceChannel.ConnectAsync();
 
         [Command("drop")]
         [Remarks("Disconnects from the voice channel")]
         [RequireContext(ContextType.Guild)]
-        public async Task drop() => await (Context.User as IVoiceState).VoiceChannel.ConnectAsync();
+        public async Task Drop() => await (Context.User as IVoiceState).VoiceChannel.DisconnectAsync();
     }
 }

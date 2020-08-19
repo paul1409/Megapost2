@@ -7,10 +7,8 @@ using System.IO;
 namespace Megapost2.Modules {
 
     public class Memes : ModuleBase<SocketCommandContext> {
-
-        string dir = Path.Combine(Directory.GetCurrentDirectory(), "memes.txt");
-        static cmdlist clist = new cmdlist();
-        List<Commands> cmds = clist.reader();
+        static readonly cmdlist clist = new cmdlist();
+        readonly List<Commands> cmds = clist.reader();
         string last;
 
         public string getCommand(string s) {
@@ -20,7 +18,7 @@ namespace Megapost2.Modules {
 
         [Command("meme")]
         [Remarks("Attempts to get command")]
-        public async Task meme([Remainder] string s) {
+        public async Task Meme([Remainder] string s) {
             if (clist.exists(s))
                 foreach (Commands c in cmds) {
                     if (c.name == s) {
@@ -71,9 +69,7 @@ namespace Megapost2.Modules {
 
         [Group("multi")]
         public class Multi : ModuleBase<SocketCommandContext> {
-            string multidir = Path.Combine(Directory.GetCurrentDirectory(), "randmemes.txt");
-            static cmdlist clist = new cmdlist();
-            List<string> multicmds = clist.multiNames();
+            static readonly cmdlist clist = new cmdlist();
 
             [Command("add")]
             [Remarks("Adds a multi command")]

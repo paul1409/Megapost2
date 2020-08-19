@@ -14,7 +14,7 @@ namespace Megapost2.Modules {
 
         [Command("add")]
         [Remarks("Adds a role to the provided users")]
-        public async Task add(IRole r, params IGuildUser[] usr) {
+        public async Task Add(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
                 foreach (IGuildUser u in usr) await u.AddRoleAsync(r);
@@ -32,7 +32,7 @@ namespace Megapost2.Modules {
 
         [Command("take")]
         [Remarks("Takes a role from the provided users")]
-        public async Task take(IRole r, params IGuildUser[] usr) {
+        public async Task Take(IRole r, params IGuildUser[] usr) {
             var roles = Context.Guild.Roles;
             if (roles.Contains(r)) {
                 foreach (IGuildUser u in usr) await u.RemoveRoleAsync(r);
@@ -50,14 +50,14 @@ namespace Megapost2.Modules {
 
         [Command("create")]
         [Remarks("Creates a new role")]
-        public async Task create(string s) {
-            await Context.Guild.CreateRoleAsync(s);
+        public async Task Create(string s) {
+            await Context.Guild.CreateRoleAsync(s, null, null, false, null);
             await Context.Channel.SendMessageAsync($"Role `{s}` has been created");
         }
 
         [Command("destroy")]
         [Remarks("Destroy the provided role")]
-        public async Task destroy(params IRole[] r) {
+        public async Task Destroy(params IRole[] r) {
             foreach (IRole role in r) {
                 if (Context.Guild.Roles.Contains(role)) {
                     await role.DeleteAsync();
@@ -68,7 +68,7 @@ namespace Megapost2.Modules {
 
         [Command("color")]
         [Remarks("Changes the color of a role via hex code")]
-        public async Task color(IRole r, string color) {
+        public async Task Color(IRole r, string color) {
             if (!TryParseColor(color, out uint colorVal))
                 await Context.Channel.SendMessageAsync($"Could not parse {color} to a proper color value");
             else {
@@ -79,7 +79,7 @@ namespace Megapost2.Modules {
 
         [Command("rename")]
         [Remarks("Renames a role")]
-        public async Task rename(IRole r, string name) {
+        public async Task Rename(IRole r, string name) {
             if (Context.Guild.Roles.Contains(r)) {
                 await r.ModifyAsync(role => { role.Name = name; });
                 await ReplyAsync(":thumbsup:");
@@ -88,7 +88,7 @@ namespace Megapost2.Modules {
 
         [Command("has")]
         [Remarks("Retrieves a ist of who has a certain role")]
-        public async Task get(IRole r) {
+        public async Task Get(IRole r) {
             List<string> u = new List<string>();
             foreach (IGuildUser user in await Context.Guild.GetUsersAsync())
                 if (user.RoleIds.Contains(r.Id)) u.Add(user.Mention);
@@ -105,7 +105,7 @@ namespace Megapost2.Modules {
 
         [Command("user")]
         [Remarks("Retrieves a ist of who has a certain role")]
-        public async Task user(IGuildUser u) {
+        public async Task User(IGuildUser u) {
             var roles = u.RoleIds;
             var embed = new EmbedBuilder()
                 .WithAuthor(a => a

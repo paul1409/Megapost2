@@ -22,11 +22,12 @@ namespace Megapost2.Modules {
         [Alias("g")]
         [Remarks("Google searches the input")]
         public async Task google(params string[] str) {
-            string s = string.Join(" ", str.Skip(0));
+            string query = string.Join(" ", str.Skip(0));
             string apiKey = "AIzaSyAi4_XbS4euGFf7LJYH9jLdERF92PRELE0";
             string cx = "006365420480420697386:a5kksrll-pc";
             var search = new CustomsearchService(new BaseClientService.Initializer { ApiKey = apiKey });
-            var listRequest = search.Cse.List(s);
+            var listRequest = search.Cse.List();
+            listRequest.Q = query;
             listRequest.Cx = cx;
             var results = listRequest.Execute();
             string result = "";
@@ -39,10 +40,10 @@ namespace Megapost2.Modules {
                 .WithAuthor(a => a
                     .WithName("Google")
                     .WithIconUrl("https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png"))
-                .WithTitle($"Search Results for: {s}")
-                .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(s)}")
+                .WithTitle($"Search Results for: {query}")
+                .WithUrl($"https://www.google.com/search?q={WebUtility.UrlEncode(query)}")
                 .WithTimestamp(DateTimeOffset.UtcNow)
-                .WithDescription($"Showing top 10 Google results for **{s}**\n" + result)
+                .WithDescription($"Showing top 10 Google results for **{query}**\n" + result)
                 .WithColor(new Discord.Color(90,218,85));
             await ReplyAsync("Fetching results ", false, embed.Build());
             await ReplyAsync(string.Format($"First result: `{results.Items.First().Title}` {results.Items.First().Link}"));
@@ -50,25 +51,25 @@ namespace Megapost2.Modules {
 
         [Command("rtd")]
         [Remarks("Simulates a dice roll")]
-        public async Task rtd(string s) {
+        public async Task Rtd(string s) {
             string[] str = s.Split('d');
             int i = int.Parse(str[0]);
             int j = int.Parse(str[1]);
             if (i > 5000 || j > 5000) await Context.Channel.SendMessageAsync("Enter something under 5000 you dumb fucks");
             if (i < 0 || j < 0) await Context.Channel.SendMessageAsync("Are you that retarded?");
-            else await ReplyAsync("You rolled a `" + j + "` die" + " " + i + " times for a total of: " + rtd(i, j) + "");
+            else await ReplyAsync("You rolled a `" + j + "` die" + " " + i + " times for a total of: " + Rtd(i, j) + "");
         }
 
         [Command("choose")]
         [Remarks("Chooses between the given items")]
-        public async Task choose(params string[] choices) {
+        public async Task Choose(params string[] choices) {
             if (choices.Length <= 0) await Context.Channel.SendMessageAsync("Nothing to choose from");
             else await ReplyAsync("I choose: " + choices[r.Next(choices.Length)]);
         }
 
         [Command("8ball")]
         [Remarks("An 8ball thing, test your fortune or whatever")]
-        public async Task eightBall(params string[] s) {
+        public async Task EightBall(params string[] s) {
             string[] str = {"It is certain", "It is decidedly so", "Without a doubt", "Yes definitely", "You may rely on it", "As I see it, yes", "Most likely",
                 "Outlook good", "Yes", "Signs point to yes", "Reply hazy try again", "Ask again later", "Better not tell you now", "Cannot predict now",
                 "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no", "Outlook not so good", " Very doubtful" };
@@ -78,7 +79,7 @@ namespace Megapost2.Modules {
         [Command("edgifier")]
         [Alias("edge", "edgify")]
         [Remarks("Makes avatars edgy")]
-        public async Task edge(IGuildUser u) {
+        public async Task Edge(IGuildUser u) {
             var ava = u.GetAvatarUrl(ImgFormat, AvatarSize);
             WebRequest request = WebRequest.Create(ava);
             WebResponse response = request.GetResponse();
@@ -122,7 +123,7 @@ namespace Megapost2.Modules {
         }
 
 
-        public int rtd(int x, int j) {
+        public int Rtd(int x, int j) {
             int total = 0;
             for (int i = 0; i < x; i++) {
                 int n = r.Next(j + 1);

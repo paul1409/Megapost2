@@ -68,9 +68,9 @@ namespace Megapost2.Modules {
 
                 $"{Format.Bold("Stats")}\n" +
                 $"- Heap Size: {GetHeapSize()} MB\n" +
-                $"- Guilds: {(Context.Client as DiscordSocketClient).Guilds.Count}\n" +
-                $"- Channels: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Channels.Count)}\n" +
-                $"- Users: {(Context.Client as DiscordSocketClient).Guilds.Sum(g => g.Users.Count)}"
+                $"- Guilds: {Context.Client.Guilds.Count}\n" +
+                $"- Channels: {Context.Client.Guilds.Sum(g => g.Channels.Count)}\n" +
+                $"- Users: {Context.Client.Guilds.Sum(g => g.Users.Count)}"
             );
         }
 
@@ -92,12 +92,12 @@ namespace Megapost2.Modules {
             var textChannels = server.Channels.OfType<ITextChannel>();
             var voiceChannels = server.Channels.OfType<IVoiceChannel>();
             var roles = server.Roles.Where(r => r.Id != server.EveryoneRole.Id);
-            builder.AppendLine($"Name: {server.Name.ToString()}")
-                  .AppendLine($"ID: {server.Id.ToString().ToString()}")
-                  .AppendLine($"Owner: {owner.Username.ToString()}")
-                  .AppendLine($"Region: {server.VoiceRegionId.ToString()}")
-                  .AppendLine($"Created: {String.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
-                  .AppendLine($"User Count: {server.MemberCount.ToString()}");
+            builder.AppendLine($"Name: {server.Name}")
+                  .AppendLine($"ID: {server.Id}")
+                  .AppendLine($"Owner: {owner.Username}")
+                  .AppendLine($"Region: {server.VoiceRegionId}")
+                  .AppendLine($"Created: {string.Format("{0:d/M/yyyy HH:mm:ss}", server.CreatedAt.ToString())}")
+                  .AppendLine($"User Count: {server.MemberCount}");
             if (roles.Any()) builder.AppendLine($"Roles: `{string.Join("`, `", roles)}`");
             builder.AppendLine($"Text Channels: `{string.Join("`, `", textChannels)}`")
             .AppendLine($"Voice Channels: `{string.Join("`, `", voiceChannels)}`");
@@ -108,7 +108,7 @@ namespace Megapost2.Modules {
 
         [Command("whou")]
         [Remarks("Gets info on a certain user")]
-        public async Task whou(IUser user) {
+        public async Task Whou(IUser user) {
             var guildUser = user as IGuildUser;
             var builder = new StringBuilder()
               .AppendLine($"Username: ``{user.Username}#{user.Discriminator}`` {(user.IsBot ? "(BOT)" : string.Empty)} ({user.Id})");

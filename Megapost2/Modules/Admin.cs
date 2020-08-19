@@ -54,7 +54,7 @@ namespace Megapost2.Modules {
         [Command("nickname")]
         [RequireUserPermission(GuildPermission.ManageNicknames)]
         [Remarks("Allows a mod to change any user's nickname")]
-        public async Task nickname(IGuildUser u, string name) =>
+        public async Task Nickname(IGuildUser u, string name) =>
             await u.ModifyAsync(x => { x.Nickname = name; });
 
         [Command("move")]
