@@ -10,8 +10,8 @@ namespace Megapost2 {
         
         private DiscordSocketClient client;
         private CommandService service;
-        private string[] welcome = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\welcome.txt"));
-        private string[] leave = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\leave.txt"));
+        private readonly string[] welcome = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\welcome.txt"));
+        private readonly string[] leave = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "Messages\\leave.txt"));
         Random r;
 
         public async Task Initialize(DiscordSocketClient client) {
@@ -25,8 +25,7 @@ namespace Megapost2 {
         }
 
         private async Task HandleCommandAsync(SocketMessage s) {
-            SocketUserMessage msg = s as SocketUserMessage;
-            if (msg == null) return;
+            if (!(s is SocketUserMessage msg)) return;
             var e = new SocketCommandContext(client, msg);
             int argPos = 0;
             if (msg.HasCharPrefix('`', ref argPos)) {
@@ -48,7 +47,7 @@ namespace Megapost2 {
             await channel.SendMessageAsync(string.Format(msg, u.ToString()));
         }
 
-        private string usrmsg(string s) {
+        private string Usrmsg(string s) {
             var lines = File.ReadAllLines(s);
             Random r = new Random();
             return lines[r.Next(0, lines.Length)];

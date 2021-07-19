@@ -6,8 +6,7 @@ using System.IO;
 
 namespace Megapost2 {
     public class Program {
-
-        StreamReader token = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "token.txt"));
+        readonly StreamReader token = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "token.txt"));
         static void Main(string[] args) => new Program().StartAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient client;
