@@ -20,7 +20,6 @@ namespace Megapost2.Modules {
         [Group("ban")]
         [RequireUserPermission(GuildPermission.BanMembers)]
         public class BanGroup : ModuleBase {
-
             [Remarks("Bans the provided users")]
             public async Task Ban(params IGuildUser[] usr) {
                 foreach (var u in usr) {
@@ -32,7 +31,6 @@ namespace Megapost2.Modules {
             public async Task Ban(params ulong[] usr) {
                 await Task.WhenAll(usr.Select(u => Context.Guild.AddBanAsync(u)));
             }
-            
         }
 
         [Command("softban")]

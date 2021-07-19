@@ -12,8 +12,7 @@ namespace Megapost2.Modules {
         string last;
 
         public string getCommand(string s) {
-            if (clist.exists(s)) return s;
-            else return null;
+            return clist.exists(s) ? s : null;
         }
 
         [Command("meme")]

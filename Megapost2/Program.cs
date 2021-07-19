@@ -14,11 +14,11 @@ namespace Megapost2 {
 
         public async Task StartAsync() {
             client = new DiscordSocketClient();
-            new CommandHandler();
             try {
                 await client.LoginAsync(TokenType.Bot, token.ReadLine());
+            } catch (Exception e) {
+                Console.WriteLine("Token missing: " + e.Message);
             }
-            catch (Exception e) { Console.WriteLine("Token missing" + e.ToString()); }
             await client.StartAsync();
             handler = new CommandHandler();
             await handler.Initialize(client);
