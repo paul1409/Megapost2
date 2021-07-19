@@ -45,5 +45,19 @@ namespace Megapost2.Modules {
             }
         }
 
+        [Command("video")]
+        [Alias("v")]
+        [Remarks("Uploads a video of up to 200MB and returns a direct link for browser playback.")]
+        public async Task UploadVideo(string url) {
+            WebClient myWebClient = new WebClient();
+            Stream vidStream = myWebClient.OpenRead(url);
+            try {
+                IImage vid = await ImgurData.Endpoint.UploadVideoAsync(vidStream);
+                await ReplyAsync("Successfully uploaded image: " + vid.Link);
+            } catch (Exception e) {
+                await ReplyAsync("Failed to upload image: " + e.Message);
+            }
+        }
+
     }
 }
