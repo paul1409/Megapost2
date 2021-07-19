@@ -33,6 +33,7 @@ namespace Megapost2.Modules {
             await ReplyAsync("Successfully logged out");
         }
 
+        [Command("upload")]
         [Alias("u")]
         [Remarks("Uploads an image via URL")]
         public async Task Upload(string url) {
